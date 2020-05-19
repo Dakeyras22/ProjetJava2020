@@ -1,16 +1,16 @@
 public class Vehicules {
-    private String etat;
-    private String modele;
-    private String marque;
-    private int vitesseMax;
-    private int prixLocation;
+    public String etat;
+    public String modele;
+    public String marque;
+    public int vitesseMax;
+    public int prixLocation;
 
-    public Vehicules(String etat, String modele, String marque, int vitesseMax, int prixLocation){
-        this.etat = etat;
-        this.modele = modele;
-        this.marque = marque;
-        this.vitesseMax = vitesseMax;
-        this.prixLocation = prixLocation;
+    public Vehicules(){
+        this.etat = "neuf";
+        this.modele = "non renseigné";
+        this.marque = "non renseignée";
+        this.vitesseMax = 0;
+        this.prixLocation = 0;
     }
 
     public String getEtat() {

@@ -1,11 +1,12 @@
-public class VehiculesTerrestre {
+public class VehiculesTerrestre extends Vehicules {
 
     private int km;
     private int puissance;
 
-    VehiculesTerrestre(int km, int puissance){
-        this.km = km;
-        this.puissance = puissance;
+    public VehiculesTerrestre(){
+        super();
+        this.km = 0;
+        this.puissance = 0;
     }
 
     public int getKm() {
