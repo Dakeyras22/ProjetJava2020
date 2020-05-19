@@ -1,9 +1,9 @@
 public class Vehicules {
-    public String etat;
-    public String modele;
-    public String marque;
-    public int vitesseMax;
-    public int prixLocation;
+    private String etat;
+    private String modele;
+    private String marque;
+    private int vitesseMax;
+    private int prixLocation;
 
     public Vehicules(){
         this.etat = "neuf";
