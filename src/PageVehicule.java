@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PageVehicule extends JFrame {
 
@@ -48,21 +50,6 @@ public class PageVehicule extends JFrame {
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
         b1.add(panQuestion);
 
-        /*JPanel bMoto = new JPanel();
-        bMoto.setLayout(new BoxLayout(bMoto, BoxLayout.PAGE_AXIS));
-        bMoto.add(panTron);
-        bMoto.add(panMoto);
-
-        JPanel bVoiture = new JPanel();
-        bVoiture.setLayout(new BoxLayout(bVoiture, BoxLayout.PAGE_AXIS));
-        bVoiture.add(panInitialD);
-        bVoiture.add(panVoiture);
-
-        JPanel bAvion = new JPanel();
-        bAvion.setLayout(new BoxLayout(bAvion, BoxLayout.PAGE_AXIS));
-        bAvion.add(panPlanes);
-        bAvion.add(panAvion);*/
-
         JPanel b2 = new JPanel();
         b2.setLayout(new GridLayout(2,3));
         b2.add(panTron);
@@ -81,9 +68,31 @@ public class PageVehicule extends JFrame {
         b4.add(b1);
         b4.add(b2);
         b4.add(b3);
+        
+        moto.addActionListener(new MotoListener());
+        voiture.addActionListener(new VoitureListener());
+        avion.addActionListener(new AvionListener());
 
         this.getContentPane().add(b4);
         this.setVisible(true);
 
+    }
+    
+    class MotoListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            
+        }
+    } 
+    
+    class VoitureListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+
+        }
+    }
+
+    class AvionListener implements ActionListener{
+        public void actionPerformed(ActionEvent e) {
+
+        }
     }
 }
