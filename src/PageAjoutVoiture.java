@@ -23,6 +23,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panInfoNbPlaces = new JPanel();
     private JPanel panInfoPrix = new JPanel();
     private JPanel panAjout = new JPanel();
+    private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
     private JLabel question = new JLabel("Veuillez rentrer les caractéristiques de la nouvelle voiture");
     private JLabel txtMarque = new JLabel("Marque");
@@ -42,6 +43,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JTextField nbPlaces = new JTextField("");
     private JTextField prix = new JTextField("");
     private JButton ajout = new JButton("Ajouter");
+    private JButton retour = new JButton("Retour");
 
     public PageAjoutVoiture(){
 
@@ -96,6 +98,8 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panInfoPrix.setBackground(Color.white);
         panAjout.add(ajout, BorderLayout.CENTER);
         panAjout.setBackground(Color.white);
+        panRetour.add(retour, BorderLayout.CENTER);
+        panRetour.setBackground(Color.white);
 
         this.setTitle("Page d'ajout d'une voiture");
         this.setResizable(false);
@@ -137,6 +141,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         JPanel b3 = new JPanel();
         b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
         b3.add(panAjout);
+        b3.add(panRetour);
 
         JPanel b4 = new JPanel();
         b4.setLayout(new BoxLayout(b4, BoxLayout.LINE_AXIS));
@@ -156,7 +161,11 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        PageAccueil pageAccueil = new PageAccueil();
+        if (e.getSource() == ajout) {
+            PageAccueil pageAccueil = new PageAccueil();
+        } else if (e.getSource() == retour) {
+            //PageVoiture pageVoiture = new PageVoiture();
+        }
         this.dispose();
     }
 

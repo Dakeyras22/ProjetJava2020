@@ -21,6 +21,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
     private JPanel panInfoPuissance = new JPanel();
     private JPanel panInfoPrix = new JPanel();
     private JPanel panAjout = new JPanel();
+    private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
     private JLabel question = new JLabel("Veuillez rentrer les caractéristiques de la nouvelle moto");
     private JLabel txtMarque = new JLabel("Marque");
@@ -38,6 +39,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
     private JTextField puissance = new JTextField("");
     private JTextField prix = new JTextField("");
     private JButton ajout = new JButton("Ajouter");
+    private JButton retour = new JButton("Retour");
 
     public PageAjoutMoto(){
 
@@ -57,6 +59,8 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         panQuestion.setBackground(Color.white);
         panSlogan.add(slogan, BorderLayout.CENTER);
         panSlogan.setBackground(Color.white);
+        panRetour.add(retour, BorderLayout.CENTER);
+        panRetour.setBackground(Color.white);
         panTxtMarque.add(txtMarque, BorderLayout.CENTER);
         panTxtMarque.setBackground(Color.white);
         panTxtModele.add(txtModele, BorderLayout.CENTER);
@@ -126,6 +130,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         JPanel b3 = new JPanel();
         b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
         b3.add(panAjout);
+        b3.add(panRetour);
 
         JPanel b4 = new JPanel();
         b4.setLayout(new BoxLayout(b4, BoxLayout.LINE_AXIS));
@@ -139,6 +144,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         b5.add(b4);
 
         ajout.addActionListener(this);
+        retour.addActionListener(this);
 
         this.getContentPane().add(b5);
         this.setVisible(true);
@@ -146,7 +152,11 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent e) {
-        PageAccueil pageAccueil = new PageAccueil();
+        if (e.getSource() == ajout) {
+            PageAccueil pageAccueil = new PageAccueil();
+        } else if (e.getSource() == retour) {
+            //PageMoto pageMoto = new PageMoto();
+        }
         this.dispose();
     }
 
