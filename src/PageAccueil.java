@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PageAccueil extends JFrame{
+public class PageAccueil extends JFrame implements ActionListener{
 
     private JPanel panClient = new JPanel();
     private JPanel panVehicule = new JPanel();
@@ -59,29 +59,22 @@ public class PageAccueil extends JFrame{
         b4.add(b2);
         b4.add(b3);
 
-        client.addActionListener(new ClientListener());
-        vehicule.addActionListener(new VehiculeListener());
-        fiche.addActionListener(new FicheListener());
+        client.addActionListener(this);
+        vehicule.addActionListener(this);
+        fiche.addActionListener(this);
 
         this.getContentPane().add(b4);
         this.setVisible(true);
     }
 
-    class ClientListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            slogan.setText("client");
-        }
-    }
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == client){
+            PageClient pageClient = new PageClient();
+        }else if(e.getSource() == vehicule){
+            PageVehicule pageVehicule = new PageVehicule();
+        }else if(e.getSource() == fiche){
 
-    class VehiculeListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            slogan.setText("vehicule");
         }
-    }
-
-    class FicheListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            slogan.setText("fiche");
-        }
+        this.dispose();
     }
 }

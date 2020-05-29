@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PageVehicule extends JFrame {
+public class PageVehicule extends JFrame implements ActionListener{
 
     private JPanel panTron = new JPanel();
     private JPanel panPlanes = new JPanel();
@@ -69,30 +69,23 @@ public class PageVehicule extends JFrame {
         b4.add(b2);
         b4.add(b3);
         
-        moto.addActionListener(new MotoListener());
-        voiture.addActionListener(new VoitureListener());
-        avion.addActionListener(new AvionListener());
+        moto.addActionListener(this);
+        voiture.addActionListener(this);
+        avion.addActionListener(this);
 
         this.getContentPane().add(b4);
         this.setVisible(true);
 
     }
-    
-    class MotoListener implements ActionListener{
-        public void actionPerformed(ActionEvent e){
-            
-        }
-    } 
-    
-    class VoitureListener implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
+
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == voiture){
+
+        }else if(e.getSource() == moto){
+
+        }else if(e.getSource() == avion){
 
         }
-    }
-
-    class AvionListener implements ActionListener{
-        public void actionPerformed(ActionEvent e) {
-
-        }
+        this.dispose();
     }
 }

@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class PageAjoutVoiture extends JFrame{
+public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -22,9 +24,9 @@ public class PageAjoutVoiture extends JFrame{
     private JPanel panInfoPrix = new JPanel();
     private JPanel panAjout = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
-    private JLabel question = new JLabel("Veuillez rentrer les caractéristiques de la nouvelles voiture");
+    private JLabel question = new JLabel("Veuillez rentrer les caractéristiques de la nouvelle voiture");
     private JLabel txtMarque = new JLabel("Marque");
-    private JLabel txtModele = new JLabel("Modele");
+    private JLabel txtModele = new JLabel("Modèle");
     private JLabel txtEtat = new JLabel("Etat");
     private JLabel txtKm = new JLabel("Kilométrage au compteur");
     private JLabel txtVitesseMax = new JLabel("Vitesse maximale");
@@ -105,57 +107,6 @@ public class PageAjoutVoiture extends JFrame{
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
         b1.add(panQuestion);
 
-        /*JPanel bMarque = new JPanel();
-        bMarque.setLayout(new BoxLayout(bMarque, BoxLayout.LINE_AXIS));
-        bMarque.add(panTxtMarque);
-        bMarque.add(panInfoMarque);
-
-        JPanel bModele = new JPanel();
-        bModele.setLayout(new BoxLayout(bModele, BoxLayout.LINE_AXIS));
-        bModele.add(panTxtModele);
-        bModele.add(panInfoModele);
-
-        JPanel bEtat = new JPanel();
-        bEtat.setLayout(new BoxLayout(bEtat, BoxLayout.LINE_AXIS));
-        bEtat.add(panTxtEtat);
-        bEtat.add(panInfoEtat);
-
-        JPanel bKm = new JPanel();
-        bKm.setLayout(new BoxLayout(bKm, BoxLayout.LINE_AXIS));
-        bKm.add(panTxtKm);
-        bKm.add(panInfoKm);
-
-        JPanel bVitesseMax = new JPanel();
-        bVitesseMax.setLayout(new BoxLayout(bVitesseMax, BoxLayout.LINE_AXIS));
-        bVitesseMax.add(panTxtVitesseMax);
-        bVitesseMax.add(panInfoVitesseMax);
-
-        JPanel bPuissance = new JPanel();
-        bPuissance.setLayout(new BoxLayout(bPuissance, BoxLayout.LINE_AXIS));
-        bPuissance.add(panTxtPuissance);
-        bPuissance.add(panInfoPuissance);
-
-        JPanel bNbPlaces = new JPanel();
-        bNbPlaces.setLayout(new BoxLayout(bNbPlaces, BoxLayout.LINE_AXIS));
-        bNbPlaces.add(panTxtNbPlaces);
-        bNbPlaces.add(panInfoNbPlaces);
-
-        JPanel bPrix = new JPanel();
-        bPrix.setLayout(new BoxLayout(bPrix, BoxLayout.LINE_AXIS));
-        bPrix.add(panTxtPrix);
-        bPrix.add(panInfoPrix);
-
-        JPanel b2 = new JPanel();
-        b2.setLayout(new BoxLayout(b2, BoxLayout.PAGE_AXIS));
-        b2.add(bMarque);
-        b2.add(bModele);
-        b2.add(bEtat);
-        b2.add(bKm);
-        b2.add(bVitesseMax);
-        b2.add(bPuissance);
-        b2.add(bNbPlaces);
-        b2.add(bPrix);*/
-
         JPanel bTxt = new JPanel();
         bTxt.setLayout(new BoxLayout(bTxt, BoxLayout.PAGE_AXIS));
         bTxt.add(panTxtMarque);
@@ -198,8 +149,15 @@ public class PageAjoutVoiture extends JFrame{
         b5.add(b3);
         b5.add(b4);
 
+        ajout.addActionListener(this);
+
         this.getContentPane().add(b5);
         this.setVisible(true);
-
     }
+
+    public void actionPerformed(ActionEvent e) {
+        PageAccueil pageAccueil = new PageAccueil();
+        this.dispose();
+    }
+
 }

@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PageAjoutAvion extends JFrame{
+public class PageAjoutAvion extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -138,17 +138,15 @@ public class PageAjoutAvion extends JFrame{
         b5.add(b3);
         b5.add(b4);
 
-        ajout.addActionListener(new AjoutListener());
+        ajout.addActionListener(this);
 
         this.getContentPane().add(b5);
         this.setVisible(true);
-
     }
 
-    class AjoutListener implements ActionListener {
-        public void actionPerformed(ActionEvent e){
-
-        }
+    public void actionPerformed(ActionEvent e) {
+        PageAccueil pageAccueil = new PageAccueil();
+        this.dispose();
     }
 
 }
