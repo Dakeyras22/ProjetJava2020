@@ -141,7 +141,13 @@ public class PageAjoutClient extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
-            PageAccueil pageAccueil = new PageAccueil();
+            if (nom.getText().equals("") || prenom.getText().equals("") || dateNaissance.getText().equals("")
+                    || adresse.getText().equals("") || telephone.getText().equals("") || mail.getText().equals("")){
+                BlankPopUp blankPopUp = new BlankPopUp();
+            } else {
+                PageAccueil pageAccueil = new PageAccueil();
+                this.dispose();
+            }
         } else if (e.getSource() == retour) {
             PageClient pageClient = new PageClient();
         }
