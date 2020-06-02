@@ -1,4 +1,4 @@
-public class Voiture {
+public class Voiture extends VehiculesTerrestre{
     private int nbPlaces;
 
     public Voiture(int nbPlaces){
@@ -14,4 +14,6 @@ public class Voiture {
     public void setNbPlaces(int nbPlaces) {
         this.nbPlaces = nbPlaces;
     }
+
+
 }
