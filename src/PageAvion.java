@@ -190,7 +190,7 @@ public class PageAvion extends JFrame implements ActionListener {
         panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
         panelFiche.setBorder(BorderFactory.createLineBorder(Color.red));
         panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
-        panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
+        //panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
