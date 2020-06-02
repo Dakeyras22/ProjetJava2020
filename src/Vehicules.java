@@ -4,6 +4,7 @@ public class Vehicules {
     private String marque;
     private int vitesseMax;
     private int prixLocation;
+    private boolean disponible;
 
     public Vehicules(){
         this.etat = "neuf";
@@ -11,6 +12,7 @@ public class Vehicules {
         this.marque = "non renseignée";
         this.vitesseMax = 0;
         this.prixLocation = 0;
+        this.disponible = true;
     }
 
     public String getEtat() {
@@ -51,5 +53,13 @@ public class Vehicules {
 
     public void setPrixLocation(int prixLocation) {
         this.prixLocation = prixLocation;
+    }
+
+    public boolean getDisponible(){
+        return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 }
