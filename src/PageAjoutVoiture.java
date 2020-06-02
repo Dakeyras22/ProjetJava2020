@@ -155,6 +155,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         b5.add(b4);
 
         ajout.addActionListener(this);
+        retour.addActionListener(this);
 
         this.getContentPane().add(b5);
         this.setVisible(true);
@@ -162,11 +163,32 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
-            PageAccueil pageAccueil = new PageAccueil();
+            if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
+                    || km.getText().equals("") || vitesseMax.getText().equals("") || puissance.getText().equals("")
+                    || nbPlaces.getText().equals("") || prix.getText().equals("")) {
+                BlankPopUp blankPopUp = new BlankPopUp();
+            } else {
+                Voiture aVoiture = ajoutVoiture();
+                PageAccueil pageAccueil = new PageAccueil();
+                this.dispose();
+            }
         } else if (e.getSource() == retour) {
             //PageVoiture pageVoiture = new PageVoiture();
+            this.dispose();
         }
-        this.dispose();
+    }
+
+    public Voiture ajoutVoiture(){
+        Voiture aVoiture = new Voiture();
+        aVoiture.setMarque(marque.getText());
+        aVoiture.setModele(modele.getText());
+        aVoiture.setEtat(etat.getText());
+        aVoiture.setKm(Integer.parseInt(km.getText()));
+        aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
+        aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
+        aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aVoiture;
     }
 
 }

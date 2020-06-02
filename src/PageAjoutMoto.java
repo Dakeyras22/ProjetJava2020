@@ -153,11 +153,31 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
-            PageAccueil pageAccueil = new PageAccueil();
+            if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
+                    || km.getText().equals("") || vitesseMax.getText().equals("") || puissance.getText().equals("")
+                    || prix.getText().equals("")) {
+                BlankPopUp blankPopUp = new BlankPopUp();
+            } else {
+                Moto aMoto = ajoutMoto();
+                PageAccueil pageAccueil = new PageAccueil();
+                this.dispose();
+            }
         } else if (e.getSource() == retour) {
             //PageMoto pageMoto = new PageMoto();
         }
         this.dispose();
+    }
+
+    public Moto ajoutMoto(){
+        Moto aMoto = new Moto();
+        aMoto.setMarque(marque.getText());
+        aMoto.setModele(modele.getText());
+        aMoto.setEtat(etat.getText());
+        aMoto.setKm(Integer.parseInt(km.getText()));
+        aMoto.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aMoto.setPuissance(Integer.parseInt(puissance.getText()));
+        aMoto.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aMoto;
     }
 
 }

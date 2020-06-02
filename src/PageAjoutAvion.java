@@ -144,6 +144,7 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         b5.add(b4);
 
         ajout.addActionListener(this);
+        retour.addActionListener(this);
 
         this.getContentPane().add(b5);
         this.setVisible(true);
@@ -151,12 +152,30 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
-            PageAccueil pageAccueil = new PageAccueil();
+            if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
+                    || nbHeureVol.getText().equals("") || vitesseMax.getText().equals("") || nbMoteur.getText().equals("")
+                    || prix.getText().equals("")) {
+                BlankPopUp blankPopUp = new BlankPopUp();
+            } else {
+                PageAccueil pageAccueil = new PageAccueil();
+                this.dispose();
+            }
         } else if (e.getSource() == retour) {
             //PageAvion pageAvion = new PageAvion();
         }
         this.dispose();
     }
 
+    public Avion ajoutAvion(){
+        Avion aAvion = new Avion();
+        aAvion.setMarque(marque.getText());
+        aAvion.setModele(modele.getText());
+        aAvion.setEtat(etat.getText());
+        aAvion.setNbHeureVol(Integer.parseInt(nbHeureVol.getText()));
+        aAvion.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
+        aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aAvion;
+    }
 }
 
