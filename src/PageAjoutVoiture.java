@@ -168,6 +168,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
                     || nbPlaces.getText().equals("") || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
+                Voiture aVoiture = ajoutVoiture();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
@@ -177,8 +178,17 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         }
     }
 
-    public void ajoutVoiture(){
-
+    public Voiture ajoutVoiture(){
+        Voiture aVoiture = new Voiture();
+        aVoiture.setMarque(marque.getText());
+        aVoiture.setModele(modele.getText());
+        aVoiture.setEtat(etat.getText());
+        aVoiture.setKm(Integer.parseInt(km.getText()));
+        aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
+        aVoiture.setNbPlaces(Integer.parseInt(puissance.getText()));
+        aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aVoiture;
     }
 
 }
