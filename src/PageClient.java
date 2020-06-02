@@ -1,12 +1,14 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
 import java.io.FileInputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PageClient extends JFrame {
+public class PageClient extends JFrame implements ActionListener {
 
     public JComboBox listeClients;
     private JPanel panelListeClient;
@@ -35,10 +37,6 @@ public class PageClient extends JFrame {
     private JPanel panelAdresse;
     private JPanel panelTelephone;
     private JPanel panelMail;
-
-
-
-
 
     private JButton retour;
     private JButton suppr;
@@ -183,7 +181,10 @@ public class PageClient extends JFrame {
         panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
         panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
 
-
+        retour.addActionListener(this);
+        ajout.addActionListener(this);
+        modif.addActionListener(this);
+        suppr.addActionListener(this);
 
         this.setBounds(500, 100, 900, 500);
         this.setResizable(false);
@@ -191,6 +192,20 @@ public class PageClient extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
+
+    }
+
+    public void actionPerformed(ActionEvent e){
+
+        if(e.getSource() == retour){
+            PageAccueil pageAccueil = new PageAccueil();
+            this.setVisible(false);
+        }
+
+        if(e.getSource() == ajout){
+            PageAjoutClient pageAjoutClient = new PageAjoutClient();
+            this.setVisible(false);
+        }
 
     }
 
