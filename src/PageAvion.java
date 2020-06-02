@@ -8,10 +8,10 @@ import java.io.FileInputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class PageVoiture extends JFrame implements ActionListener {
+public class PageAvion extends JFrame implements ActionListener {
 
-    public JComboBox listeVoiture;
-    private JPanel panelListeVoiture;
+    public JComboBox listeAvion;
+    private JPanel panelListeAvion;
     private JPanel panelPrincipal;
     private JPanel panelFicheBoutons;
     private JPanel panelBoutons;
@@ -27,57 +27,54 @@ public class PageVoiture extends JFrame implements ActionListener {
     private JPanel panelMarqueF;
     private JPanel panelModeleF;
     private JPanel panelVitesseMaxF;
-    private JPanel panelKmF;
+    private JPanel panelHeureVolF;
     private JPanel panelEtatF;
-    private JPanel panelPuissanceF;
+    private JPanel panelNbMoteurF;
     private JPanel panelPrixF;
-    private JPanel panelNbPlacesF;
 
     private JPanel panelMarque;
     private JPanel panelModele;
     private JPanel panelVitesseMax;
-    private JPanel panelKm;
+    private JPanel panelHeureVol;
     private JPanel panelEtat;
-    private JPanel panelPuissance;
+    private JPanel panelNbMoteur;
     private JPanel panelPrix;
-    private JPanel panelNbPlaces;
 
     private JButton retour;
     private JButton suppr;
     private JButton ajout;
     private JButton modif;
 
-    private Voiture laVoiture;
+    private Avion avion;
 
-    private ArrayList<String> tabVoiture;
+    private ArrayList<String> tabAvion;
 
 
-    public PageVoiture(){
+    public PageAvion(){
 
         BorderLayout borderPrincipal = new BorderLayout();
         BorderLayout borderFicheBoutons = new BorderLayout();
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
         GridLayout grilleBoutons = new GridLayout(4,1);
         BorderLayout borderFiche = new BorderLayout();
-        GridLayout grilleInfoF = new GridLayout(8,1);
-        GridLayout grilleInfo = new GridLayout(8,1);
+        GridLayout grilleInfoF = new GridLayout(7,1);
+        GridLayout grilleInfo = new GridLayout(7,1);
 
         JLabel marqueF = new JLabel("Marque :");
         JLabel modeleF = new JLabel("Modèle :");
-        JLabel puissanceF = new JLabel("Puissance :");
+        JLabel nbMoteursF = new JLabel("Nombre de moteurs :");
         JLabel etatF = new JLabel("Etat :");
-        JLabel kmF = new JLabel("Km :");
+        JLabel nbHeuresVolF = new JLabel("Heures de Vol :");
         JLabel prixF = new JLabel("prix");
-        JLabel nbPlacesF = new JLabel("Nombre de places :");
         JLabel vitesseMaxF = new JLabel("Vitesse Max :");
 
         retour = new JButton("Retour");
-        suppr = new JButton("Supprimer voiture");
-        ajout = new JButton("Ajouter voiture");
-        modif = new JButton("Consulter voiture");
+        suppr = new JButton("Supprimer avion");
+        ajout = new JButton("Ajouter avion");
+        modif = new JButton("Consulter avion");
 
-        listeVoiture = new JComboBox();
-        panelListeVoiture = new JPanel();
+        listeAvion = new JComboBox();
+        panelListeAvion = new JPanel();
         panelPrincipal = new JPanel();
         panelFicheBoutons = new JPanel();
         panelFiche = new JPanel();
@@ -92,78 +89,72 @@ public class PageVoiture extends JFrame implements ActionListener {
         panelMarqueF = new JPanel();
         panelModeleF = new JPanel();
         panelVitesseMaxF = new JPanel();
-        panelKmF = new JPanel();
+        panelHeureVolF = new JPanel();
         panelEtatF = new JPanel();
-        panelPuissanceF = new JPanel();
+        panelNbMoteurF = new JPanel();
         panelPrixF = new JPanel();
-        panelNbPlacesF = new JPanel();
+
 
 
         panelMarque = new JPanel();
         panelModele = new JPanel();
         panelVitesseMax = new JPanel();
-        panelKm = new JPanel();
+        panelHeureVol = new JPanel();
         panelEtat = new JPanel();
-        panelPuissance = new JPanel();
+        panelNbMoteur = new JPanel();
         panelPrix = new JPanel();
-        panelNbPlaces = new JPanel();
 
 
-        if(listeVoiture.getSelectedItem() != null) {
-            laVoiture = ficheInit(listeVoiture.getSelectedItem().toString());
-            JLabel marque = new JLabel(laVoiture.getMarque());
-            JLabel modele = new JLabel(laVoiture.getModele());
-            JLabel vitesseMax = new JLabel(String.valueOf(laVoiture.getVitesseMax()));
-            JLabel km = new JLabel(String.valueOf(laVoiture.getKm()));
-            JLabel etat = new JLabel(laVoiture.getEtat());
-            JLabel puissance = new JLabel(String.valueOf(laVoiture.getPuissance()));
-            JLabel prix = new JLabel(String.valueOf(laVoiture.getPrixLocation()));
-            JLabel nbPlace = new JLabel(String.valueOf(laVoiture.getNbPlaces()));
+
+        if(listeAvion.getSelectedItem() != null) {
+            avion = ficheInit(listeAvion.getSelectedItem().toString());
+            JLabel marque = new JLabel(avion.getMarque());
+            JLabel modele = new JLabel(avion.getModele());
+            JLabel vitesseMax = new JLabel(String.valueOf(avion.getVitesseMax()));
+            JLabel nbHeuresVol = new JLabel(String.valueOf(avion.getNbHeureVol()));
+            JLabel etat = new JLabel(avion.getEtat());
+            JLabel nbMoteur = new JLabel(String.valueOf(avion.getNbMoteur()));
+            JLabel prix = new JLabel(String.valueOf(avion.getPrixLocation()));
+
 
             panelMarque.add(marque);
             panelModele.add(modele);
             panelVitesseMax.add(vitesseMax);
-            panelKm.add(km);
+            panelHeureVol.add(nbHeuresVol);
             panelEtat.add(etat);
-            panelPuissance.add(puissance);
+            panelNbMoteur.add(nbMoteur);
             panelPrix.add(prix);
-            panelNbPlaces.add(nbPlace);
 
             panelInfo.setLayout(grilleInfo);
             panelInfo.add(panelMarque);
             panelInfo.add(panelModele);
             panelInfo.add(panelVitesseMax);
-            panelInfo.add(panelKm);
+            panelInfo.add(panelHeureVol);
             panelInfo.add(panelEtat);
-            panelInfo.add(panelPuissance);
+            panelInfo.add(panelNbMoteur);
             panelInfo.add(panelPrix);
-            panelInfo.add(panelNbPlaces);
 
         }
 
         panelMarqueF.add(marqueF);
         panelModeleF.add(modeleF);
         panelVitesseMaxF.add(vitesseMaxF);
-        panelKmF.add(kmF);
+        panelHeureVolF.add(nbHeuresVolF);
         panelEtatF.add(etatF);
-        panelPuissanceF.add(puissanceF);
+        panelNbMoteurF.add(nbMoteursF);
         panelPrixF.add(prixF);
-        panelNbPlacesF.add(nbPlacesF);
 
 
         panelInfoF.setLayout(grilleInfoF);
         panelInfoF.add(panelMarqueF);
         panelInfoF.add(panelModeleF);
         panelInfoF.add(panelVitesseMaxF);
-        panelInfoF.add(panelKmF);
+        panelInfoF.add(panelHeureVolF);
         panelInfoF.add(panelEtatF);
-        panelInfoF.add(panelPuissanceF);
+        panelInfoF.add(panelNbMoteurF);
         panelInfoF.add(panelPrixF);
-        panelInfoF.add(panelNbPlacesF);
 
-
-
-        panelListeVoiture.add(listeVoiture);
+        panelListeAvion.add(listeAvion);
         panelFiche.setLayout(borderFiche);
         panelFiche.add(panelInfoF,BorderLayout.WEST);
         panelFiche.add(panelInfo,BorderLayout.EAST);
@@ -185,15 +176,15 @@ public class PageVoiture extends JFrame implements ActionListener {
         panelSuppr.add(suppr);
         panelRetour.add(retour);
 
-        panelListeVoiture.setSize(new Dimension(900,50));
-        listeVoiture.setPreferredSize(new Dimension(900,50));
+        panelListeAvion.setSize(new Dimension(900,50));
+        listeAvion.setPreferredSize(new Dimension(900,50));
         panelBoutons.setPreferredSize(new Dimension(300,300));
         panelFiche.setPreferredSize(new Dimension(600,400));
         panelInfoF.setPreferredSize(new Dimension(300,400));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
-        panelPrincipal.add(panelListeVoiture);
+        panelPrincipal.add(panelListeAvion);
         panelPrincipal.add(panelFicheBoutons,BorderLayout.SOUTH);
 
         panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -213,7 +204,7 @@ public class PageVoiture extends JFrame implements ActionListener {
         this.setBounds(500, 100, 900, 500);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("Page Voiture");
+        this.setTitle("Page Avion");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -228,19 +219,19 @@ public class PageVoiture extends JFrame implements ActionListener {
         }
 
         if(e.getSource() == ajout){
-            PageAjoutVoiture pageAjoutVoiture = new PageAjoutVoiture();
+            PageAjoutAvion pageAjoutAvion = new PageAjoutAvion();
             this.setVisible(false);
         }
 
     }
 
-    public Voiture ficheInit(String voiture) {
+    public Avion ficheInit(String avion) {
 
-        Voiture car = null;
+        Avion plane = null;
         try {
-            FileInputStream fichier = new FileInputStream("./Client/" + voiture + ".xml");
+            FileInputStream fichier = new FileInputStream("./Client/" + avion + ".xml");
             XMLDecoder decoder = new XMLDecoder(fichier);
-            car = (Voiture) decoder.readObject();
+            plane = (Avion) decoder.readObject();
             decoder.close();
             fichier.close();
 
@@ -249,7 +240,7 @@ public class PageVoiture extends JFrame implements ActionListener {
         catch(Exception e){
             System.out.println(e);
         }
-        return car;
+        return plane;
     }
 
 

@@ -1,7 +1,7 @@
 public class Voiture extends VehiculesTerrestre{
     private int nbPlaces;
 
-    public Voiture(int nbPlaces){
+    public Voiture(){
         super();
         this.nbPlaces = 0;
 

@@ -85,7 +85,10 @@ public class PageVehicule extends JFrame implements ActionListener{
 
         }else if(e.getSource() == moto){
 
+            PageMoto pageMoto = new PageMoto();
+
         }else if(e.getSource() == avion){
+            PageAvion pageAvion = new PageAvion();
 
         }
         this.dispose();
