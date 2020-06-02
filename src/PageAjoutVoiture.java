@@ -186,7 +186,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         aVoiture.setKm(Integer.parseInt(km.getText()));
         aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
         aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-        aVoiture.setNbPlaces(Integer.parseInt(puissance.getText()));
+        aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
         aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
         return aVoiture;
     }

@@ -166,5 +166,16 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         this.dispose();
     }
 
+    public Avion ajoutAvion(){
+        Avion aAvion = new Avion();
+        aAvion.setMarque(marque.getText());
+        aAvion.setModele(modele.getText());
+        aAvion.setEtat(etat.getText());
+        aAvion.setNbHeureVol(Integer.parseInt(nbHeureVol.getText()));
+        aAvion.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
+        aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aAvion;
+    }
 }
 

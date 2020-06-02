@@ -158,6 +158,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
                     || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
+                Moto aMoto = ajoutMoto();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
@@ -165,6 +166,18 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
             //PageMoto pageMoto = new PageMoto();
         }
         this.dispose();
+    }
+
+    public Moto ajoutMoto(){
+        Moto aMoto = new Moto();
+        aMoto.setMarque(marque.getText());
+        aMoto.setModele(modele.getText());
+        aMoto.setEtat(etat.getText());
+        aMoto.setKm(Integer.parseInt(km.getText()));
+        aMoto.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aMoto.setPuissance(Integer.parseInt(puissance.getText()));
+        aMoto.setPrixLocation(Integer.parseInt(prix.getText()));
+        return aMoto;
     }
 
 }
