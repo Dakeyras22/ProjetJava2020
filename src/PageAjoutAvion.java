@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class PageAjoutAvion extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
@@ -163,7 +166,8 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
                     || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                PageAccueil pageAccueil = new PageAccueil();
+                ajoutAvion();
+                PageAvion pageAvion = new PageAvion();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
@@ -182,6 +186,21 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
         aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
         aAvion.setDisponible(disponible);
+        ecrireAvion(aAvion);
+    }
+
+    public void ecrireAvion(Avion anAvion) {
+
+        try {
+            FileOutputStream car = new FileOutputStream("./Avions/"+anAvion.getMarque()+" "+anAvion.getModele()+".xml");
+            XMLEncoder encoder = new XMLEncoder(car);
+            encoder.writeObject(anAvion);
+            encoder.close();
+            car.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
 

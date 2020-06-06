@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -40,6 +42,14 @@ public class PageAvion extends JFrame implements ActionListener {
     private JPanel panelNbMoteur;
     private JPanel panelPrix;
 
+    private JLabel marque;
+    private JLabel modele;
+    private JLabel vitesseMax;
+    private JLabel nbHeuresVol;
+    private JLabel etat;
+    private JLabel nbMoteur;
+    private JLabel prix;
+
     private JButton retour;
     private JButton suppr;
     private JButton ajout;
@@ -47,7 +57,7 @@ public class PageAvion extends JFrame implements ActionListener {
 
     private Avion avion;
 
-    private ArrayList<String> tabAvion;
+    private ArrayList<String> tabAvion = new ArrayList<>();
 
 
     public PageAvion(){
@@ -103,18 +113,20 @@ public class PageAvion extends JFrame implements ActionListener {
         panelEtat = new JPanel();
         panelNbMoteur = new JPanel();
         panelPrix = new JPanel();
-
-
+        ajoutListeAvion();
+        if(!tabAvion.isEmpty()){
+            comboBoxInit();
+        }
 
         if(listeAvion.getSelectedItem() != null) {
             avion = ficheInit(listeAvion.getSelectedItem().toString());
-            JLabel marque = new JLabel(avion.getMarque());
-            JLabel modele = new JLabel(avion.getModele());
-            JLabel vitesseMax = new JLabel(String.valueOf(avion.getVitesseMax()));
-            JLabel nbHeuresVol = new JLabel(String.valueOf(avion.getNbHeureVol()));
-            JLabel etat = new JLabel(avion.getEtat());
-            JLabel nbMoteur = new JLabel(String.valueOf(avion.getNbMoteur()));
-            JLabel prix = new JLabel(String.valueOf(avion.getPrixLocation()));
+            marque = new JLabel(avion.getMarque());
+            modele = new JLabel(avion.getModele());
+            vitesseMax = new JLabel(String.valueOf(avion.getVitesseMax()));
+            nbHeuresVol = new JLabel(String.valueOf(avion.getNbHeureVol()));
+            etat = new JLabel(avion.getEtat());
+            nbMoteur = new JLabel(String.valueOf(avion.getNbMoteur()));
+            prix = new JLabel(String.valueOf(avion.getPrixLocation()));
 
 
             panelMarque.add(marque);
@@ -181,22 +193,23 @@ public class PageAvion extends JFrame implements ActionListener {
         panelBoutons.setPreferredSize(new Dimension(300,300));
         panelFiche.setPreferredSize(new Dimension(600,400));
         panelInfoF.setPreferredSize(new Dimension(300,400));
+        panelInfo.setPreferredSize(new Dimension(300,400));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
         panelPrincipal.add(panelListeAvion);
         panelPrincipal.add(panelFicheBoutons,BorderLayout.SOUTH);
 
-        panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
-        panelFiche.setBorder(BorderFactory.createLineBorder(Color.red));
-        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
-        //panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
+
+        panelFiche.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfo.setBorder(BorderFactory.createLineBorder(Color.black));
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
         modif.addActionListener(this);
         suppr.addActionListener(this);
-
+        listeAvion.addActionListener(this);
 
 
 
@@ -223,13 +236,24 @@ public class PageAvion extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if (e.getSource() == listeAvion){
+            avion = ficheInit(listeAvion.getSelectedItem().toString());
+            marque.setText(avion.getMarque());
+            modele.setText(avion.getModele());
+            vitesseMax.setText(String.valueOf(avion.getVitesseMax()));
+            nbHeuresVol.setText(String.valueOf(avion.getNbHeureVol()));
+            etat.setText(avion.getEtat());
+            nbMoteur.setText(String.valueOf(avion.getNbMoteur()));
+            prix.setText(String.valueOf(avion.getPrixLocation()));
+        }
+
     }
 
     public Avion ficheInit(String avion) {
 
         Avion plane = null;
         try {
-            FileInputStream fichier = new FileInputStream("./Client/" + avion + ".xml");
+            FileInputStream fichier = new FileInputStream("./Avions/" + avion + ".xml");
             XMLDecoder decoder = new XMLDecoder(fichier);
             plane = (Avion) decoder.readObject();
             decoder.close();
@@ -243,6 +267,51 @@ public class PageAvion extends JFrame implements ActionListener {
         return plane;
     }
 
+// ============================================================
+
+    public void ajoutListeAvion(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+        new File("./Avions").mkdir();
+
+        int i;
+        File dossier = new File("./Avions/");
+        File[] fichiersAvion = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersAvion.length; i++) {
+
+            String[] tab = fichiersAvion[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String modele = nomFichierh[1];
+            String marque = nomFichierh[0];
+            String plane = marque + " " + modele;
+
+            tabAvion.add(plane);
+        }
+
+    }
+
+    // ==========================================================================
+
+    /**
+     * Cette fonction permet de remplir la ComboBox des voitures
+     */
+
+    private void comboBoxInit() {
+        listeAvion.removeAllItems();
+        for (String c : tabAvion) {
+
+            listeAvion.addItem(c);
+
+        }
+
+
+    }
 
 
 }

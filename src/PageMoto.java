@@ -202,10 +202,10 @@ public class PageMoto extends JFrame implements ActionListener {
         panelPrincipal.add(panelListeMoto);
         panelPrincipal.add(panelFicheBoutons,BorderLayout.SOUTH);
 
-        panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
-        panelFiche.setBorder(BorderFactory.createLineBorder(Color.red));
-        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
-        panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
+
+        panelFiche.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfo.setBorder(BorderFactory.createLineBorder(Color.black));
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
@@ -281,6 +281,7 @@ public class PageMoto extends JFrame implements ActionListener {
         };
 
         int i;
+        new File("./Motos").mkdir();
         File dossier = new File("./Motos/");
         File[] fichiersMoto = dossier.listFiles(filtre);
         for (i = 0; i < fichiersMoto.length; i++) {
