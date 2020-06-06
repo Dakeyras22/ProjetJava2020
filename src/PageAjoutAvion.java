@@ -40,6 +40,13 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
     private JTextField prix = new JTextField("");
     private JButton ajout = new JButton("Ajouter");
     private JButton retour = new JButton("Retour");
+    private JPanel panTxtDispo = new JPanel();
+    private JPanel panInfoDispo = new JPanel();
+    private JLabel txtDispo = new JLabel("Disponible");
+    private JRadioButton dispo = new JRadioButton("oui");
+    private JRadioButton indispo = new JRadioButton("non");
+    private ButtonGroup buttonGroup = new ButtonGroup();
+    private boolean disponible;
 
     public PageAjoutAvion(){
 
@@ -54,6 +61,13 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         vitesseMax.setPreferredSize(new Dimension(150,30));
         nbMoteur.setPreferredSize(new Dimension(150,30));
         prix.setPreferredSize(new Dimension(150,30));
+
+        buttonGroup.add(dispo);
+        buttonGroup.add(indispo);
+        panInfoDispo.setLayout(new BoxLayout(panInfoDispo, BoxLayout.LINE_AXIS));
+        panInfoDispo.add(dispo);
+        panInfoDispo.add(indispo);
+        panInfoDispo.setBackground(Color.white);
 
         panQuestion.add(question, BorderLayout.CENTER);
         panQuestion.setBackground(Color.white);
@@ -91,6 +105,8 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         panAjout.setBackground(Color.white);
         panRetour.add(retour, BorderLayout.CENTER);
         panRetour.setBackground(Color.white);
+        panTxtDispo.add(txtDispo, BorderLayout.CENTER);
+        panTxtDispo.setBackground(Color.white);
 
         this.setTitle("Page d'ajout d'un avion");
         this.setResizable(false);
@@ -102,51 +118,41 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
         b1.add(panQuestion);
 
-        JPanel bTxt = new JPanel();
-        bTxt.setLayout(new BoxLayout(bTxt, BoxLayout.PAGE_AXIS));
-        bTxt.add(panTxtMarque);
-        bTxt.add(panTxtModele);
-        bTxt.add(panTxtEtat);
-        bTxt.add(panTxtNbHeureVol);
-        bTxt.add(panTxtVitesseMax);
-        bTxt.add(panTxtNbMoteur);
-        bTxt.add(panTxtPrix);
-
-        JPanel bInfo = new JPanel();
-        bInfo.setLayout(new BoxLayout(bInfo, BoxLayout.PAGE_AXIS));
-        bInfo.add(panInfoMarque);
-        bInfo.add(panInfoModele);
-        bInfo.add(panInfoEtat);
-        bInfo.add(panInfoNbHeureVol);
-        bInfo.add(panInfoVitesseMax);
-        bInfo.add(panInfoNbMoteur);
-        bInfo.add(panInfoPrix);
-
         JPanel b2 = new JPanel();
-        b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
-        b2.add(bTxt);
-        b2.add(bInfo);
+        b2.setLayout(new GridLayout(9,2));
+        b2.add(panTxtMarque);
+        b2.add(panInfoMarque);
+        b2.add(panTxtModele);
+        b2.add(panInfoModele);
+        b2.add(panTxtEtat);
+        b2.add(panInfoEtat);
+        b2.add(panTxtNbHeureVol);
+        b2.add(panInfoNbHeureVol);
+        b2.add(panTxtVitesseMax);
+        b2.add(panInfoVitesseMax);
+        b2.add(panTxtNbMoteur);
+        b2.add(panInfoNbMoteur);
+        b2.add(panTxtPrix);
+        b2.add(panInfoPrix);
+        b2.add(panTxtDispo);
+        b2.add(panInfoDispo);
+        b2.add(panAjout);
+        b2.add(panRetour);
 
         JPanel b3 = new JPanel();
         b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
-        b3.add(panAjout);
-        b3.add(panRetour);
+        b3.add(panSlogan);
 
         JPanel b4 = new JPanel();
-        b4.setLayout(new BoxLayout(b4, BoxLayout.LINE_AXIS));
-        b4.add(panSlogan);
-
-        JPanel b5 = new JPanel();
-        b5.setLayout(new BoxLayout(b5, BoxLayout.PAGE_AXIS));
-        b5.add(b1);
-        b5.add(b2);
-        b5.add(b3);
-        b5.add(b4);
+        b4.setLayout(new BoxLayout(b4, BoxLayout.PAGE_AXIS));
+        b4.add(b1);
+        b4.add(b2);
+        b4.add(b3);
 
         ajout.addActionListener(this);
         retour.addActionListener(this);
 
-        this.getContentPane().add(b5);
+        this.getContentPane().add(b4);
         this.setVisible(true);
     }
 
@@ -161,12 +167,12 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            PageAvion pageAvion = new PageAvion();
+            new PageAvion();
         }
         this.dispose();
     }
 
-    public Avion ajoutAvion(){
+    public void ajoutAvion(){
         Avion aAvion = new Avion();
         aAvion.setMarque(marque.getText());
         aAvion.setModele(modele.getText());
@@ -175,7 +181,7 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         aAvion.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
         aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
         aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
-        return aAvion;
+        aAvion.setDisponible(disponible);
     }
 }
 
