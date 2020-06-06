@@ -2,52 +2,43 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
 
-public class PageAjoutVoiture extends JFrame implements ActionListener{
+public class PageConsultAvion extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
     private JPanel panTxtModele = new JPanel();
     private JPanel panTxtEtat = new JPanel();
-    private JPanel panTxtKm = new JPanel();
+    private JPanel panTxtNbHeureVol = new JPanel();
     private JPanel panTxtVitesseMax = new JPanel();
-    private JPanel panTxtPuissance = new JPanel();
-    private JPanel panTxtNbPlaces = new JPanel();
+    private JPanel panTxtNbMoteur = new JPanel();
     private JPanel panTxtPrix = new JPanel();
     private JPanel panInfoMarque = new JPanel();
     private JPanel panInfoModele = new JPanel();
     private JPanel panInfoEtat = new JPanel();
-    private JPanel panInfoKm = new JPanel();
+    private JPanel panInfoNbHeureVol = new JPanel();
     private JPanel panInfoVitesseMax = new JPanel();
-    private JPanel panInfoPuissance = new JPanel();
-    private JPanel panInfoNbPlaces = new JPanel();
+    private JPanel panInfoNbMoteur = new JPanel();
     private JPanel panInfoPrix = new JPanel();
     private JPanel panAjout = new JPanel();
     private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
-    private JLabel question = new JLabel("Veuillez rentrer les modifications de la voiture");
+    private JLabel question = new JLabel("Voici les infos de l'avion que vous pouvez modifier");
     private JLabel txtMarque = new JLabel("Marque");
     private JLabel txtModele = new JLabel("Modèle");
     private JLabel txtEtat = new JLabel("Etat");
-    private JLabel txtKm = new JLabel("Kilométrage au compteur");
+    private JLabel txtNbHeureVol = new JLabel("Nombre d'heures de vol au compteur");
     private JLabel txtVitesseMax = new JLabel("Vitesse maximale");
-    private JLabel txtPuissance = new JLabel("Puissance");
-    private JLabel txtNbPlaces = new JLabel("Nombre de places");
-    private JLabel txtPrix = new JLabel("Prix location par jour (50km compris)");
+    private JLabel txtNbMoteur = new JLabel("Nombre de moteurs");
+    private JLabel txtPrix = new JLabel("Prix location par jour");
     private JTextField marque = new JTextField("");
     private JTextField modele = new JTextField("");
     private JTextField etat = new JTextField("");
-    private JTextField km = new JTextField("");
+    private JTextField nbHeureVol = new JTextField("");
     private JTextField vitesseMax = new JTextField("");
-    private JTextField puissance = new JTextField("");
-    private JTextField nbPlaces = new JTextField("");
+    private JTextField nbMoteur = new JTextField("");
     private JTextField prix = new JTextField("");
-    private JButton ajout = new JButton("Ajouter");
+    private JButton ajout = new JButton("Terminer les modifications");
     private JButton retour = new JButton("Retour");
     private JPanel panTxtDispo = new JPanel();
     private JPanel panInfoDispo = new JPanel();
@@ -57,20 +48,32 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
-    public PageAjoutVoiture(){
+    public PageConsultAvion(Avion anAvion){
 
+        marque.setText(anAvion.getMarque());
+        modele.setText(anAvion.getModele());
+        etat.setText(anAvion.getEtat());
+        nbHeureVol.setText(String.valueOf(anAvion.getNbHeureVol()));
+        vitesseMax.setText(String.valueOf(anAvion.getVitesseMax()));
+        nbMoteur.setText(String.valueOf(anAvion.getNbMoteur()));
+        prix.setText(String.valueOf(anAvion.getPrixLocation()));
+        if(anAvion.getDisponible()==true){
+            dispo.setSelected(true);
+        }else{
+            indispo.setSelected(true);
+        }
+        
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        marque.setPreferredSize(new Dimension(150,20));
-        modele.setPreferredSize(new Dimension(150,20));
-        etat.setPreferredSize(new Dimension(150,20));
-        km.setPreferredSize(new Dimension(150,20));
-        vitesseMax.setPreferredSize(new Dimension(150,20));
-        puissance.setPreferredSize(new Dimension(150,20));
-        nbPlaces.setPreferredSize(new Dimension(150,20));
-        prix.setPreferredSize(new Dimension(150,20));
+        marque.setPreferredSize(new Dimension(150,30));
+        modele.setPreferredSize(new Dimension(150,30));
+        etat.setPreferredSize(new Dimension(150,30));
+        nbHeureVol.setPreferredSize(new Dimension(150,30));
+        vitesseMax.setPreferredSize(new Dimension(150,30));
+        nbMoteur.setPreferredSize(new Dimension(150,30));
+        prix.setPreferredSize(new Dimension(150,30));
 
         buttonGroup.add(dispo);
         buttonGroup.add(indispo);
@@ -89,14 +92,12 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panTxtModele.setBackground(Color.white);
         panTxtEtat.add(txtEtat, BorderLayout.CENTER);
         panTxtEtat.setBackground(Color.white);
-        panTxtKm.add(txtKm, BorderLayout.CENTER);
-        panTxtKm.setBackground(Color.white);
+        panTxtNbHeureVol.add(txtNbHeureVol, BorderLayout.CENTER);
+        panTxtNbHeureVol.setBackground(Color.white);
         panTxtVitesseMax.add(txtVitesseMax, BorderLayout.CENTER);
         panTxtVitesseMax.setBackground(Color.white);
-        panTxtPuissance.add(txtPuissance, BorderLayout.CENTER);
-        panTxtPuissance.setBackground(Color.white);
-        panTxtNbPlaces.add(txtNbPlaces, BorderLayout.CENTER);
-        panTxtNbPlaces.setBackground(Color.white);
+        panTxtNbMoteur.add(txtNbMoteur, BorderLayout.CENTER);
+        panTxtNbMoteur.setBackground(Color.white);
         panTxtPrix.add(txtPrix, BorderLayout.CENTER);
         panTxtPrix.setBackground(Color.white);
         panInfoMarque.add(marque, BorderLayout.CENTER);
@@ -105,14 +106,12 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panInfoModele.setBackground(Color.white);
         panInfoEtat.add(etat, BorderLayout.CENTER);
         panInfoEtat.setBackground(Color.white);
-        panInfoKm.add(km, BorderLayout.CENTER);
-        panInfoKm.setBackground(Color.white);
+        panInfoNbHeureVol.add(nbHeureVol, BorderLayout.CENTER);
+        panInfoNbHeureVol.setBackground(Color.white);
         panInfoVitesseMax.add(vitesseMax, BorderLayout.CENTER);
         panInfoVitesseMax.setBackground(Color.white);
-        panInfoPuissance.add(puissance, BorderLayout.CENTER);
-        panInfoPuissance.setBackground(Color.white);
-        panInfoNbPlaces.add(nbPlaces, BorderLayout.CENTER);
-        panInfoNbPlaces.setBackground(Color.white);
+        panInfoNbMoteur.add(nbMoteur, BorderLayout.CENTER);
+        panInfoNbMoteur.setBackground(Color.white);
         panInfoPrix.add(prix, BorderLayout.CENTER);
         panInfoPrix.setBackground(Color.white);
         panAjout.add(ajout, BorderLayout.CENTER);
@@ -122,8 +121,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panTxtDispo.add(txtDispo, BorderLayout.CENTER);
         panTxtDispo.setBackground(Color.white);
 
-
-        this.setTitle("Page d'ajout d'une voiture");
+        this.setTitle("Page de consultation d'un avion");
         this.setResizable(false);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
@@ -134,21 +132,19 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         b1.add(panQuestion);
 
         JPanel b2 = new JPanel();
-        b2.setLayout(new GridLayout(10,2));
+        b2.setLayout(new GridLayout(9,2));
         b2.add(panTxtMarque);
         b2.add(panInfoMarque);
         b2.add(panTxtModele);
         b2.add(panInfoModele);
         b2.add(panTxtEtat);
         b2.add(panInfoEtat);
-        b2.add(panTxtKm);
-        b2.add(panInfoKm);
+        b2.add(panTxtNbHeureVol);
+        b2.add(panInfoNbHeureVol);
         b2.add(panTxtVitesseMax);
         b2.add(panInfoVitesseMax);
-        b2.add(panTxtPuissance);
-        b2.add(panInfoPuissance);
-        b2.add(panTxtNbPlaces);
-        b2.add(panInfoNbPlaces);
+        b2.add(panTxtNbMoteur);
+        b2.add(panInfoNbMoteur);
         b2.add(panTxtPrix);
         b2.add(panInfoPrix);
         b2.add(panTxtDispo);
@@ -168,8 +164,6 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
 
         ajout.addActionListener(this);
         retour.addActionListener(this);
-        dispo.addActionListener(this);
-        indispo.addActionListener(this);
 
         this.getContentPane().add(b4);
         this.setVisible(true);
@@ -178,17 +172,16 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
             if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
-                    || km.getText().equals("") || vitesseMax.getText().equals("") || puissance.getText().equals("")
-                    || nbPlaces.getText().equals("") || prix.getText().equals("")
-                    || (dispo.isSelected()==false && indispo.isSelected()==false)) {
+                    || nbHeureVol.getText().equals("") || vitesseMax.getText().equals("") || nbMoteur.getText().equals("")
+                    || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                ajoutVoiture();
+                ModifAvion();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            PageVoiture pageVoiture = new PageVoiture();
+            new PageAvion();
             this.dispose();
         }
         if(dispo.isSelected()==true){
@@ -198,37 +191,15 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         }
     }
 
-            public void ajoutVoiture(){
-                Voiture aVoiture = new Voiture();
-                aVoiture.setMarque(marque.getText());
-                aVoiture.setModele(modele.getText());
-                aVoiture.setEtat(etat.getText());
-                aVoiture.setKm(Integer.parseInt(km.getText()));
-                aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
-                aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-                aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
-                aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
-                aVoiture.setDisponible(disponible);
-
-                ecrireVoiture(aVoiture);
-            }
-
-    public void ecrireVoiture(Voiture aVoiture) {
-
-        try {
-            new File("./Voitures").mkdir();
-            FileOutputStream car = new FileOutputStream("./Voitures/"+aVoiture.getMarque()+" "+aVoiture.getModele()+".xml");
-            XMLEncoder encoder = new XMLEncoder(car);
-            encoder.writeObject(aVoiture);
-            encoder.close();
-            car.close();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+    public void ModifAvion(){
+        Avion anAvion = new Avion();
+        anAvion.setMarque(marque.getText());
+        anAvion.setModele(modele.getText());
+        anAvion.setEtat(etat.getText());
+        anAvion.setNbHeureVol(Integer.parseInt(nbHeureVol.getText()));
+        anAvion.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        anAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
+        anAvion.setPrixLocation(Integer.parseInt(prix.getText()));
+        anAvion.setDisponible(disponible);
     }
-    /* =================================================*/
-
-
-
 }

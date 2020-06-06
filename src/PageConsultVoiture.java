@@ -2,13 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
 
-public class PageAjoutVoiture extends JFrame implements ActionListener{
+public class PageConsultVoiture extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -30,7 +25,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panAjout = new JPanel();
     private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
-    private JLabel question = new JLabel("Veuillez rentrer les modifications de la voiture");
+    private JLabel question = new JLabel("Voici les infos de la voiture que vous pouvez modifier");
     private JLabel txtMarque = new JLabel("Marque");
     private JLabel txtModele = new JLabel("Modèle");
     private JLabel txtEtat = new JLabel("Etat");
@@ -47,7 +42,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JTextField puissance = new JTextField("");
     private JTextField nbPlaces = new JTextField("");
     private JTextField prix = new JTextField("");
-    private JButton ajout = new JButton("Ajouter");
+    private JButton ajout = new JButton("Terminer les modifications");
     private JButton retour = new JButton("Retour");
     private JPanel panTxtDispo = new JPanel();
     private JPanel panInfoDispo = new JPanel();
@@ -57,7 +52,22 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
-    public PageAjoutVoiture(){
+    public PageConsultVoiture(Voiture aVoiture){
+
+        marque.setText(aVoiture.getMarque());
+        modele.setText(aVoiture.getModele());
+        etat.setText(aVoiture.getEtat());
+        km.setText(String.valueOf(aVoiture.getKm()));
+        vitesseMax.setText(String.valueOf(aVoiture.getVitesseMax()));
+        puissance.setText(String.valueOf(aVoiture.getPuissance()));
+        nbPlaces.setText(String.valueOf(aVoiture.getNbPlaces()));
+        prix.setText(String.valueOf(aVoiture.getPrixLocation()));
+        if(aVoiture.getDisponible()==true){
+            dispo.setSelected(true);
+        }else{
+            indispo.setSelected(true);
+        }
+
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
@@ -123,7 +133,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panTxtDispo.setBackground(Color.white);
 
 
-        this.setTitle("Page d'ajout d'une voiture");
+        this.setTitle("Page de consultation d'une voiture");
         this.setResizable(false);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
@@ -183,7 +193,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
                     || (dispo.isSelected()==false && indispo.isSelected()==false)) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                ajoutVoiture();
+                ModifVoiture();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
@@ -198,37 +208,17 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         }
     }
 
-            public void ajoutVoiture(){
-                Voiture aVoiture = new Voiture();
-                aVoiture.setMarque(marque.getText());
-                aVoiture.setModele(modele.getText());
-                aVoiture.setEtat(etat.getText());
-                aVoiture.setKm(Integer.parseInt(km.getText()));
-                aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
-                aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-                aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
-                aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
-                aVoiture.setDisponible(disponible);
-
-                ecrireVoiture(aVoiture);
-            }
-
-    public void ecrireVoiture(Voiture aVoiture) {
-
-        try {
-            new File("./Voitures").mkdir();
-            FileOutputStream car = new FileOutputStream("./Voitures/"+aVoiture.getMarque()+" "+aVoiture.getModele()+".xml");
-            XMLEncoder encoder = new XMLEncoder(car);
-            encoder.writeObject(aVoiture);
-            encoder.close();
-            car.close();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+    public void ModifVoiture(){
+        Voiture aVoiture = new Voiture();
+        aVoiture.setMarque(marque.getText());
+        aVoiture.setModele(modele.getText());
+        aVoiture.setEtat(etat.getText());
+        aVoiture.setKm(Integer.parseInt(km.getText()));
+        aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
+        aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
+        aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
+        aVoiture.setDisponible(disponible);
     }
-    /* =================================================*/
-
-
 
 }
