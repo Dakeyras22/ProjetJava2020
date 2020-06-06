@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class PageAjoutAvion extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
@@ -164,18 +167,13 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ajoutAvion();
-                PageAccueil pageAccueil = new PageAccueil();
+                PageAvion pageAvion = new PageAvion();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
             new PageAvion();
-            this.dispose();
         }
-        if(dispo.isSelected()==true){
-            disponible=true;
-        }else if(indispo.isSelected()==true){
-            disponible=false;
-        }
+        this.dispose();
     }
 
     public void ajoutAvion(){
@@ -188,6 +186,21 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
         aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
         aAvion.setDisponible(disponible);
+        ecrireAvion(aAvion);
+    }
+
+    public void ecrireAvion(Avion anAvion) {
+
+        try {
+            FileOutputStream car = new FileOutputStream("./Avions/"+anAvion.getMarque()+" "+anAvion.getModele()+".xml");
+            XMLEncoder encoder = new XMLEncoder(car);
+            encoder.writeObject(anAvion);
+            encoder.close();
+            car.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
 

@@ -204,7 +204,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
     public void ecrireMoto(Moto aMoto) {
 
         try {
-            new File("./Motos").mkdir();
+
             FileOutputStream motorbike = new FileOutputStream("./Motos/"+aMoto.getMarque()+" "+aMoto.getModele()+".xml");
             XMLEncoder encoder = new XMLEncoder(motorbike);
             encoder.writeObject(aMoto);

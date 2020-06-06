@@ -296,6 +296,7 @@ public class PageVoiture extends JFrame implements ActionListener {
         };
 
         int i;
+        new File("./Voitures").mkdir();
         File dossier = new File("./Voitures/");
         File[] fichiersVoitures = dossier.listFiles(filtre);
         for (i = 0; i < fichiersVoitures.length; i++) {
