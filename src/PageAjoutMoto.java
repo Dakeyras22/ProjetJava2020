@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.File;
+import java.io.FileOutputStream;
 
 public class PageAjoutMoto extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
@@ -158,7 +161,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
                     || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                Moto aMoto = ajoutMoto();
+                ajoutMoto();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
@@ -168,7 +171,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         this.dispose();
     }
 
-    public Moto ajoutMoto(){
+    public void ajoutMoto(){
         Moto aMoto = new Moto();
         aMoto.setMarque(marque.getText());
         aMoto.setModele(modele.getText());
@@ -177,7 +180,24 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         aMoto.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
         aMoto.setPuissance(Integer.parseInt(puissance.getText()));
         aMoto.setPrixLocation(Integer.parseInt(prix.getText()));
-        return aMoto;
+
+        ecrireMoto(aMoto);
+
+    }
+
+    public void ecrireMoto(Moto aMoto) {
+
+        try {
+            new File("./Motos").mkdir();
+            FileOutputStream motorbike = new FileOutputStream("./Motos/"+aMoto.getMarque()+" "+aMoto.getModele()+".xml");
+            XMLEncoder encoder = new XMLEncoder(motorbike);
+            encoder.writeObject(aMoto);
+            encoder.close();
+            motorbike.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 
 }

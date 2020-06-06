@@ -42,13 +42,13 @@ public class PageMoto extends JFrame implements ActionListener {
     private JPanel panelPuissance;
     private JPanel panelPrix;
 
-    private JLabel marque;
-    private JLabel modele;
-    private JLabel vitesseMax;
-    private JLabel km;
-    private JLabel etat;
-    private JLabel puissance;
-    private JLabel prix;
+    private JLabel marque = new JLabel();
+    private JLabel modele = new JLabel();
+    private JLabel vitesseMax = new JLabel();
+    private JLabel km = new JLabel();
+    private JLabel etat = new JLabel();
+    private JLabel puissance = new JLabel();
+    private JLabel prix = new JLabel();
 
 
     private JButton retour;
@@ -58,7 +58,7 @@ public class PageMoto extends JFrame implements ActionListener {
 
     private Moto laMoto;
 
-    private ArrayList<String> tabMoto;
+    private ArrayList<String> tabMoto = new ArrayList<>();
 
 
     public PageMoto(){
@@ -114,38 +114,41 @@ public class PageMoto extends JFrame implements ActionListener {
         panelEtat = new JPanel();
         panelPuissance = new JPanel();
         panelPrix = new JPanel();
+        ajoutListeMoto();
+        if(!tabMoto.isEmpty()){
+            comboBoxInit();
+        }
 
 
+        if(listeMoto.getSelectedItem() != null) {
+            laMoto = ficheInit(listeMoto.getSelectedItem().toString());
+            marque.setText(laMoto.getMarque());
+            modele.setText(laMoto.getModele());
+            vitesseMax.setText(String.valueOf(laMoto.getVitesseMax()));
+            km.setText(String.valueOf(laMoto.getKm()));
+            etat.setText(laMoto.getEtat());
+            puissance.setText(String.valueOf(laMoto.getPuissance()));
+            prix.setText(String.valueOf(laMoto.getPrixLocation()));
 
-            if(listeMoto.getSelectedItem() != null) {
-                laMoto = ficheInit(listeMoto.getSelectedItem().toString());
-                marque = new JLabel(laMoto.getMarque());
-                modele = new JLabel(laMoto.getModele());
-                vitesseMax = new JLabel(String.valueOf(laMoto.getVitesseMax()));
-                km = new JLabel(String.valueOf(laMoto.getKm()));
-                etat = new JLabel(laMoto.getEtat());
-                puissance = new JLabel(String.valueOf(laMoto.getPuissance()));
-                prix = new JLabel(String.valueOf(laMoto.getPrixLocation()));
 
+            panelMarque.add(marque);
+            panelModele.add(modele);
+            panelVitesseMax.add(vitesseMax);
+            panelKm.add(km);
+            panelEtat.add(etat);
+            panelPuissance.add(puissance);
+            panelPrix.add(prix);
 
-                panelMarque.add(marque);
-                panelModele.add(modele);
-                panelVitesseMax.add(vitesseMax);
-                panelKm.add(km);
-                panelEtat.add(etat);
-                panelPuissance.add(puissance);
-                panelPrix.add(prix);
+            panelInfo.setLayout(grilleInfo);
+            panelInfo.add(panelMarque);
+            panelInfo.add(panelModele);
+            panelInfo.add(panelVitesseMax);
+            panelInfo.add(panelKm);
+            panelInfo.add(panelEtat);
+            panelInfo.add(panelPuissance);
+            panelInfo.add(panelPrix);
 
-                panelInfo.setLayout(grilleInfo);
-                panelInfo.add(panelMarque);
-                panelInfo.add(panelModele);
-                panelInfo.add(panelVitesseMax);
-                panelInfo.add(panelKm);
-                panelInfo.add(panelEtat);
-                panelInfo.add(panelPuissance);
-                panelInfo.add(panelPrix);
-
-            }
+        }
 
         panelMarqueF.add(marqueF);
         panelModeleF.add(modeleF);
@@ -192,6 +195,7 @@ public class PageMoto extends JFrame implements ActionListener {
         panelBoutons.setPreferredSize(new Dimension(300,300));
         panelFiche.setPreferredSize(new Dimension(600,400));
         panelInfoF.setPreferredSize(new Dimension(300,400));
+        panelInfo.setPreferredSize(new Dimension(300,400));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
@@ -207,7 +211,7 @@ public class PageMoto extends JFrame implements ActionListener {
         ajout.addActionListener(this);
         modif.addActionListener(this);
         suppr.addActionListener(this);
-
+        listeMoto.addActionListener(this);
 
 
 
@@ -251,7 +255,7 @@ public class PageMoto extends JFrame implements ActionListener {
 
         Moto motorbike = null;
         try {
-            FileInputStream fichier = new FileInputStream("./Client/" + moto + ".xml");
+            FileInputStream fichier = new FileInputStream("./Motos/" + moto + ".xml");
             XMLDecoder decoder = new XMLDecoder(fichier);
             motorbike = (Moto) decoder.readObject();
             decoder.close();
