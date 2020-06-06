@@ -182,6 +182,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         } else if (e.getSource() == retour) {
             //PageVoiture pageVoiture = new PageVoiture();
             this.dispose();
+
         }
     }
 
