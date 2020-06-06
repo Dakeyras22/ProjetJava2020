@@ -163,13 +163,19 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
                     || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
+                ajoutAvion();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
             new PageAvion();
+            this.dispose();
         }
-        this.dispose();
+        if(dispo.isSelected()==true){
+            disponible=true;
+        }else if(indispo.isSelected()==true){
+            disponible=false;
+        }
     }
 
     public void ajoutAvion(){

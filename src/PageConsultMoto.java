@@ -2,13 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.XMLEncoder;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
 
-public class PageAjoutVoiture extends JFrame implements ActionListener{
+public class PageConsultMoto extends JFrame implements ActionListener {
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -17,7 +12,6 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panTxtKm = new JPanel();
     private JPanel panTxtVitesseMax = new JPanel();
     private JPanel panTxtPuissance = new JPanel();
-    private JPanel panTxtNbPlaces = new JPanel();
     private JPanel panTxtPrix = new JPanel();
     private JPanel panInfoMarque = new JPanel();
     private JPanel panInfoModele = new JPanel();
@@ -25,19 +19,17 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panInfoKm = new JPanel();
     private JPanel panInfoVitesseMax = new JPanel();
     private JPanel panInfoPuissance = new JPanel();
-    private JPanel panInfoNbPlaces = new JPanel();
     private JPanel panInfoPrix = new JPanel();
     private JPanel panAjout = new JPanel();
     private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
-    private JLabel question = new JLabel("Veuillez rentrer les modifications de la voiture");
+    private JLabel question = new JLabel("Voici les infos de l'avion que vous pouvez modifier");
     private JLabel txtMarque = new JLabel("Marque");
     private JLabel txtModele = new JLabel("Modèle");
     private JLabel txtEtat = new JLabel("Etat");
     private JLabel txtKm = new JLabel("Kilométrage au compteur");
     private JLabel txtVitesseMax = new JLabel("Vitesse maximale");
     private JLabel txtPuissance = new JLabel("Puissance");
-    private JLabel txtNbPlaces = new JLabel("Nombre de places");
     private JLabel txtPrix = new JLabel("Prix location par jour (50km compris)");
     private JTextField marque = new JTextField("");
     private JTextField modele = new JTextField("");
@@ -45,9 +37,8 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JTextField km = new JTextField("");
     private JTextField vitesseMax = new JTextField("");
     private JTextField puissance = new JTextField("");
-    private JTextField nbPlaces = new JTextField("");
     private JTextField prix = new JTextField("");
-    private JButton ajout = new JButton("Ajouter");
+    private JButton ajout = new JButton("Terminer les modifications");
     private JButton retour = new JButton("Retour");
     private JPanel panTxtDispo = new JPanel();
     private JPanel panInfoDispo = new JPanel();
@@ -57,32 +48,39 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
-    public PageAjoutVoiture(){
+    public PageConsultMoto(Moto aMoto){
+
+        marque.setText(aMoto.getMarque());
+        modele.setText(aMoto.getModele());
+        etat.setText(aMoto.getEtat());
+        km.setText(String.valueOf(aMoto.getKm()));
+        vitesseMax.setText(String.valueOf(aMoto.getVitesseMax()));
+        puissance.setText(String.valueOf(aMoto.getPuissance()));
+        prix.setText(String.valueOf(aMoto.getPrixLocation()));
+        if(aMoto.getDisponible()==true){
+            dispo.setSelected(true);
+        }else{
+            indispo.setSelected(true);
+        }
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        marque.setPreferredSize(new Dimension(150,20));
-        modele.setPreferredSize(new Dimension(150,20));
-        etat.setPreferredSize(new Dimension(150,20));
-        km.setPreferredSize(new Dimension(150,20));
-        vitesseMax.setPreferredSize(new Dimension(150,20));
-        puissance.setPreferredSize(new Dimension(150,20));
-        nbPlaces.setPreferredSize(new Dimension(150,20));
-        prix.setPreferredSize(new Dimension(150,20));
-
-        buttonGroup.add(dispo);
-        buttonGroup.add(indispo);
-        panInfoDispo.setLayout(new BoxLayout(panInfoDispo, BoxLayout.LINE_AXIS));
-        panInfoDispo.add(dispo);
-        panInfoDispo.add(indispo);
-        panInfoDispo.setBackground(Color.white);
+        marque.setPreferredSize(new Dimension(150,30));
+        modele.setPreferredSize(new Dimension(150,30));
+        etat.setPreferredSize(new Dimension(150,30));
+        km.setPreferredSize(new Dimension(150,30));
+        vitesseMax.setPreferredSize(new Dimension(150,30));
+        puissance.setPreferredSize(new Dimension(150,30));
+        prix.setPreferredSize(new Dimension(150,30));
 
         panQuestion.add(question, BorderLayout.CENTER);
         panQuestion.setBackground(Color.white);
         panSlogan.add(slogan, BorderLayout.CENTER);
         panSlogan.setBackground(Color.white);
+        panRetour.add(retour, BorderLayout.CENTER);
+        panRetour.setBackground(Color.white);
         panTxtMarque.add(txtMarque, BorderLayout.CENTER);
         panTxtMarque.setBackground(Color.white);
         panTxtModele.add(txtModele, BorderLayout.CENTER);
@@ -95,8 +93,6 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panTxtVitesseMax.setBackground(Color.white);
         panTxtPuissance.add(txtPuissance, BorderLayout.CENTER);
         panTxtPuissance.setBackground(Color.white);
-        panTxtNbPlaces.add(txtNbPlaces, BorderLayout.CENTER);
-        panTxtNbPlaces.setBackground(Color.white);
         panTxtPrix.add(txtPrix, BorderLayout.CENTER);
         panTxtPrix.setBackground(Color.white);
         panInfoMarque.add(marque, BorderLayout.CENTER);
@@ -111,19 +107,14 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panInfoVitesseMax.setBackground(Color.white);
         panInfoPuissance.add(puissance, BorderLayout.CENTER);
         panInfoPuissance.setBackground(Color.white);
-        panInfoNbPlaces.add(nbPlaces, BorderLayout.CENTER);
-        panInfoNbPlaces.setBackground(Color.white);
         panInfoPrix.add(prix, BorderLayout.CENTER);
         panInfoPrix.setBackground(Color.white);
         panAjout.add(ajout, BorderLayout.CENTER);
         panAjout.setBackground(Color.white);
-        panRetour.add(retour, BorderLayout.CENTER);
-        panRetour.setBackground(Color.white);
         panTxtDispo.add(txtDispo, BorderLayout.CENTER);
         panTxtDispo.setBackground(Color.white);
 
-
-        this.setTitle("Page d'ajout d'une voiture");
+        this.setTitle("Page de consultation d'une moto");
         this.setResizable(false);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
@@ -134,7 +125,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         b1.add(panQuestion);
 
         JPanel b2 = new JPanel();
-        b2.setLayout(new GridLayout(10,2));
+        b2.setLayout(new GridLayout(9,2));
         b2.add(panTxtMarque);
         b2.add(panInfoMarque);
         b2.add(panTxtModele);
@@ -147,8 +138,6 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         b2.add(panInfoVitesseMax);
         b2.add(panTxtPuissance);
         b2.add(panInfoPuissance);
-        b2.add(panTxtNbPlaces);
-        b2.add(panInfoNbPlaces);
         b2.add(panTxtPrix);
         b2.add(panInfoPrix);
         b2.add(panTxtDispo);
@@ -173,22 +162,22 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
 
         this.getContentPane().add(b4);
         this.setVisible(true);
+
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ajout) {
             if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
                     || km.getText().equals("") || vitesseMax.getText().equals("") || puissance.getText().equals("")
-                    || nbPlaces.getText().equals("") || prix.getText().equals("")
-                    || (dispo.isSelected()==false && indispo.isSelected()==false)) {
+                    || prix.getText().equals("")) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                ajoutVoiture();
+                ModifMoto();
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            PageVoiture pageVoiture = new PageVoiture();
+            PageMoto pageMoto = new PageMoto();
             this.dispose();
         }
         if(dispo.isSelected()==true){
@@ -198,37 +187,15 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         }
     }
 
-            public void ajoutVoiture(){
-                Voiture aVoiture = new Voiture();
-                aVoiture.setMarque(marque.getText());
-                aVoiture.setModele(modele.getText());
-                aVoiture.setEtat(etat.getText());
-                aVoiture.setKm(Integer.parseInt(km.getText()));
-                aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
-                aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-                aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
-                aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
-                aVoiture.setDisponible(disponible);
-
-                ecrireVoiture(aVoiture);
-            }
-
-    public void ecrireVoiture(Voiture aVoiture) {
-
-        try {
-            new File("./Voitures").mkdir();
-            FileOutputStream car = new FileOutputStream("./Voitures/"+aVoiture.getMarque()+" "+aVoiture.getModele()+".xml");
-            XMLEncoder encoder = new XMLEncoder(car);
-            encoder.writeObject(aVoiture);
-            encoder.close();
-            car.close();
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
+    public void ModifMoto(){
+        Moto aMoto = new Moto();
+        aMoto.setMarque(marque.getText());
+        aMoto.setModele(modele.getText());
+        aMoto.setEtat(etat.getText());
+        aMoto.setKm(Integer.parseInt(km.getText()));
+        aMoto.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aMoto.setPuissance(Integer.parseInt(puissance.getText()));
+        aMoto.setPrixLocation(Integer.parseInt(prix.getText()));
+        aMoto.setDisponible(disponible);
     }
-    /* =================================================*/
-
-
-
 }
