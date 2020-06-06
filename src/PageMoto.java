@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -39,6 +41,15 @@ public class PageMoto extends JFrame implements ActionListener {
     private JPanel panelEtat;
     private JPanel panelPuissance;
     private JPanel panelPrix;
+
+    private JLabel marque;
+    private JLabel modele;
+    private JLabel vitesseMax;
+    private JLabel km;
+    private JLabel etat;
+    private JLabel puissance;
+    private JLabel prix;
+
 
     private JButton retour;
     private JButton suppr;
@@ -108,13 +119,13 @@ public class PageMoto extends JFrame implements ActionListener {
 
             if(listeMoto.getSelectedItem() != null) {
                 laMoto = ficheInit(listeMoto.getSelectedItem().toString());
-                JLabel marque = new JLabel(laMoto.getMarque());
-                JLabel modele = new JLabel(laMoto.getModele());
-                JLabel vitesseMax = new JLabel(String.valueOf(laMoto.getVitesseMax()));
-                JLabel km = new JLabel(String.valueOf(laMoto.getKm()));
-                JLabel etat = new JLabel(laMoto.getEtat());
-                JLabel puissance = new JLabel(String.valueOf(laMoto.getPuissance()));
-                JLabel prix = new JLabel(String.valueOf(laMoto.getPrixLocation()));
+                marque = new JLabel(laMoto.getMarque());
+                modele = new JLabel(laMoto.getModele());
+                vitesseMax = new JLabel(String.valueOf(laMoto.getVitesseMax()));
+                km = new JLabel(String.valueOf(laMoto.getKm()));
+                etat = new JLabel(laMoto.getEtat());
+                puissance = new JLabel(String.valueOf(laMoto.getPuissance()));
+                prix = new JLabel(String.valueOf(laMoto.getPrixLocation()));
 
 
                 panelMarque.add(marque);
@@ -223,6 +234,17 @@ public class PageMoto extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource() == listeMoto){
+            laMoto = ficheInit(listeMoto.getSelectedItem().toString());
+            marque.setText(laMoto.getMarque());
+            modele.setText(laMoto.getModele());
+            vitesseMax.setText(String.valueOf(laMoto.getVitesseMax()));
+            km.setText(String.valueOf(laMoto.getKm()));
+            etat.setText(laMoto.getEtat());
+            puissance.setText(String.valueOf(laMoto.getPuissance()));
+            prix.setText(String.valueOf(laMoto.getPrixLocation()));
+            panelInfo.repaint();
+        }
     }
 
     public Moto ficheInit(String moto) {
@@ -243,6 +265,48 @@ public class PageMoto extends JFrame implements ActionListener {
         return motorbike;
     }
 
+    // ============================================================
+
+    public void ajoutListeMoto(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        File dossier = new File("./Motos/");
+        File[] fichiersMoto = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersMoto.length; i++) {
+
+            String[] tab = fichiersMoto[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String modele = nomFichierh[1];
+            String marque = nomFichierh[0];
+            String motorbike = marque + " " + modele;
+
+            tabMoto.add(motorbike);
+        }
+
+    }
+
+    /**
+     * Cette fonction permet de remplir la ComboBox des voitures
+     */
+
+    private void comboBoxInit() {
+        listeMoto.removeAllItems();
+        for (String c : tabMoto) {
+
+            listeMoto.addItem(c);
+
+        }
+
+
+    }
 
 
 }

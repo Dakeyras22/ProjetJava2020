@@ -88,7 +88,7 @@ public class PageVoiture extends JFrame implements ActionListener {
         retour = new JButton("Retour");
         suppr = new JButton("Supprimer voiture");
         ajout = new JButton("Ajouter voiture");
-        modif = new JButton("Consulter voiture");
+        modif = new JButton("Modifier voiture");
 
         listeVoiture = new JComboBox();
         panelListeVoiture = new JPanel();
@@ -303,9 +303,9 @@ public class PageVoiture extends JFrame implements ActionListener {
             String[] tab = fichiersVoitures[i].toString().split("/");
             String[] nomFichier = tab[2].split(".xml");
             String[] nomFichierh = nomFichier[0].split(" ");
-            String prenom = nomFichierh[1];
-            String nom = nomFichierh[0];
-            String car = nom + " " + prenom;
+            String modele = nomFichierh[1];
+            String marque = nomFichierh[0];
+            String car = marque + " " + modele;
 
             tabVoiture.add(car);
         }
@@ -315,7 +315,7 @@ public class PageVoiture extends JFrame implements ActionListener {
     // ==========================================================================
 
     /**
-     * Cette fonction permet de remplir la ComboBox des clients
+     * Cette fonction permet de remplir la ComboBox des voitures
      */
 
     private void comboBoxInit() {
