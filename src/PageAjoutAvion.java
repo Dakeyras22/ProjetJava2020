@@ -161,7 +161,7 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            //PageAvion pageAvion = new PageAvion();
+            PageAvion pageAvion = new PageAvion();
         }
         this.dispose();
     }

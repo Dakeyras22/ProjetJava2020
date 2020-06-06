@@ -145,6 +145,8 @@ public class PageAjoutClient extends JFrame implements ActionListener {
                     || adresse.getText().equals("") || telephone.getText().equals("") || mail.getText().equals("")){
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
+                ajoutClient(nom.getText(), prenom.getText(),dateNaissance.getText(),adresse.getText(),
+                        telephone.getText(), mail.getText());
                 PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
@@ -152,5 +154,10 @@ public class PageAjoutClient extends JFrame implements ActionListener {
             PageClient pageClient = new PageClient();
         }
         this.dispose();
+    }
+
+    public void ajoutClient(String nom, String prenom, String dateNaissance, String adresse, String telephone,
+                            String mail){
+        Client aClient = new Client(nom,prenom,dateNaissance,adresse,telephone,mail);
     }
 }

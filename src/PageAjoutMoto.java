@@ -163,7 +163,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            //PageMoto pageMoto = new PageMoto();
+            PageMoto pageMoto = new PageMoto();
         }
         this.dispose();
     }
