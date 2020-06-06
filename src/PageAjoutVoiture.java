@@ -30,7 +30,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JPanel panAjout = new JPanel();
     private JPanel panRetour = new JPanel();
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
-    private JLabel question = new JLabel("Veuillez rentrer les caractéristiques de la nouvelle voiture");
+    private JLabel question = new JLabel("Veuillez rentrer les modifications de la voiture");
     private JLabel txtMarque = new JLabel("Marque");
     private JLabel txtModele = new JLabel("Modèle");
     private JLabel txtEtat = new JLabel("Etat");
@@ -49,8 +49,13 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private JTextField prix = new JTextField("");
     private JButton ajout = new JButton("Ajouter");
     private JButton retour = new JButton("Retour");
-
-
+    private JPanel panTxtDispo = new JPanel();
+    private JPanel panInfoDispo = new JPanel();
+    private JLabel txtDispo = new JLabel("Disponible");
+    private JRadioButton dispo = new JRadioButton("oui");
+    private JRadioButton indispo = new JRadioButton("non");
+    private ButtonGroup buttonGroup = new ButtonGroup();
+    private boolean disponible;
 
     public PageAjoutVoiture(){
 
@@ -58,14 +63,21 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        marque.setPreferredSize(new Dimension(150,30));
-        modele.setPreferredSize(new Dimension(150,30));
-        etat.setPreferredSize(new Dimension(150,30));
-        km.setPreferredSize(new Dimension(150,30));
-        vitesseMax.setPreferredSize(new Dimension(150,30));
-        puissance.setPreferredSize(new Dimension(150,30));
-        nbPlaces.setPreferredSize(new Dimension(150,30));
-        prix.setPreferredSize(new Dimension(150,30));
+        marque.setPreferredSize(new Dimension(150,20));
+        modele.setPreferredSize(new Dimension(150,20));
+        etat.setPreferredSize(new Dimension(150,20));
+        km.setPreferredSize(new Dimension(150,20));
+        vitesseMax.setPreferredSize(new Dimension(150,20));
+        puissance.setPreferredSize(new Dimension(150,20));
+        nbPlaces.setPreferredSize(new Dimension(150,20));
+        prix.setPreferredSize(new Dimension(150,20));
+
+        buttonGroup.add(dispo);
+        buttonGroup.add(indispo);
+        panInfoDispo.setLayout(new BoxLayout(panInfoDispo, BoxLayout.LINE_AXIS));
+        panInfoDispo.add(dispo);
+        panInfoDispo.add(indispo);
+        panInfoDispo.setBackground(Color.white);
 
         panQuestion.add(question, BorderLayout.CENTER);
         panQuestion.setBackground(Color.white);
@@ -107,6 +119,9 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         panAjout.setBackground(Color.white);
         panRetour.add(retour, BorderLayout.CENTER);
         panRetour.setBackground(Color.white);
+        panTxtDispo.add(txtDispo, BorderLayout.CENTER);
+        panTxtDispo.setBackground(Color.white);
+
 
         this.setTitle("Page d'ajout d'une voiture");
         this.setResizable(false);
@@ -118,53 +133,45 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
         b1.add(panQuestion);
 
-        JPanel bTxt = new JPanel();
-        bTxt.setLayout(new BoxLayout(bTxt, BoxLayout.PAGE_AXIS));
-        bTxt.add(panTxtMarque);
-        bTxt.add(panTxtModele);
-        bTxt.add(panTxtEtat);
-        bTxt.add(panTxtKm);
-        bTxt.add(panTxtVitesseMax);
-        bTxt.add(panTxtPuissance);
-        bTxt.add(panTxtNbPlaces);
-        bTxt.add(panTxtPrix);
-
-        JPanel bInfo = new JPanel();
-        bInfo.setLayout(new BoxLayout(bInfo, BoxLayout.PAGE_AXIS));
-        bInfo.add(panInfoMarque);
-        bInfo.add(panInfoModele);
-        bInfo.add(panInfoEtat);
-        bInfo.add(panInfoKm);
-        bInfo.add(panInfoVitesseMax);
-        bInfo.add(panInfoPuissance);
-        bInfo.add(panInfoNbPlaces);
-        bInfo.add(panInfoPrix);
-
         JPanel b2 = new JPanel();
-        b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
-        b2.add(bTxt);
-        b2.add(bInfo);
+        b2.setLayout(new GridLayout(10,2));
+        b2.add(panTxtMarque);
+        b2.add(panInfoMarque);
+        b2.add(panTxtModele);
+        b2.add(panInfoModele);
+        b2.add(panTxtEtat);
+        b2.add(panInfoEtat);
+        b2.add(panTxtKm);
+        b2.add(panInfoKm);
+        b2.add(panTxtVitesseMax);
+        b2.add(panInfoVitesseMax);
+        b2.add(panTxtPuissance);
+        b2.add(panInfoPuissance);
+        b2.add(panTxtNbPlaces);
+        b2.add(panInfoNbPlaces);
+        b2.add(panTxtPrix);
+        b2.add(panInfoPrix);
+        b2.add(panTxtDispo);
+        b2.add(panInfoDispo);
+        b2.add(panAjout);
+        b2.add(panRetour);
 
         JPanel b3 = new JPanel();
         b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
-        b3.add(panAjout);
-        b3.add(panRetour);
+        b3.add(panSlogan);
 
         JPanel b4 = new JPanel();
-        b4.setLayout(new BoxLayout(b4, BoxLayout.LINE_AXIS));
-        b4.add(panSlogan);
-
-        JPanel b5 = new JPanel();
-        b5.setLayout(new BoxLayout(b5, BoxLayout.PAGE_AXIS));
-        b5.add(b1);
-        b5.add(b2);
-        b5.add(b3);
-        b5.add(b4);
+        b4.setLayout(new BoxLayout(b4, BoxLayout.PAGE_AXIS));
+        b4.add(b1);
+        b4.add(b2);
+        b4.add(b3);
 
         ajout.addActionListener(this);
         retour.addActionListener(this);
+        dispo.addActionListener(this);
+        indispo.addActionListener(this);
 
-        this.getContentPane().add(b5);
+        this.getContentPane().add(b4);
         this.setVisible(true);
     }
 
@@ -172,33 +179,38 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         if (e.getSource() == ajout) {
             if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
                     || km.getText().equals("") || vitesseMax.getText().equals("") || puissance.getText().equals("")
-                    || nbPlaces.getText().equals("") || prix.getText().equals("")) {
+                    || nbPlaces.getText().equals("") || prix.getText().equals("")
+                    || (dispo.isSelected()==false && indispo.isSelected()==false)) {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ajoutVoiture();
-                PageVoiture pageVoiture = new PageVoiture();
+                PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
-            //PageVoiture pageVoiture = new PageVoiture();
+            PageVoiture pageVoiture = new PageVoiture();
             this.dispose();
-
+        }
+        if(dispo.isSelected()==true){
+            disponible=true;
+        }else if(indispo.isSelected()==true){
+            disponible=false;
         }
     }
 
-    public void ajoutVoiture(){
-        Voiture aVoiture = new Voiture();
-        aVoiture.setMarque(marque.getText());
-        aVoiture.setModele(modele.getText());
-        aVoiture.setEtat(etat.getText());
-        aVoiture.setKm(Integer.parseInt(km.getText()));
-        aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
-        aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-        aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
-        aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
+            public void ajoutVoiture(){
+                Voiture aVoiture = new Voiture();
+                aVoiture.setMarque(marque.getText());
+                aVoiture.setModele(modele.getText());
+                aVoiture.setEtat(etat.getText());
+                aVoiture.setKm(Integer.parseInt(km.getText()));
+                aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+                aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
+                aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
+                aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
 
-        ecrireVoiture(aVoiture);
-    }
+                ecrireVoiture(aVoiture);
+            }
 
     public void ecrireVoiture(Voiture aVoiture) {
 
