@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -47,9 +49,21 @@ public class PageVoiture extends JFrame implements ActionListener {
     private JButton ajout;
     private JButton modif;
 
+    JLabel marque = new JLabel();
+    JLabel modele = new JLabel();
+    JLabel vitesseMax = new JLabel();
+    JLabel km = new JLabel();
+    JLabel etat = new JLabel();
+    JLabel puissance = new JLabel();
+    JLabel prix = new JLabel();
+    JLabel nbPlace = new JLabel();
+
     private Voiture laVoiture;
 
-    private ArrayList<String> tabVoiture;
+    private ArrayList<String> tabVoiture = new ArrayList<String>();
+
+
+
 
 
     public PageVoiture(){
@@ -107,18 +121,22 @@ public class PageVoiture extends JFrame implements ActionListener {
         panelPuissance = new JPanel();
         panelPrix = new JPanel();
         panelNbPlaces = new JPanel();
+        ajoutListeVoiture();
+        if(!tabVoiture.isEmpty()){
+            comboBoxInit();
+        }
 
 
         if(listeVoiture.getSelectedItem() != null) {
             laVoiture = ficheInit(listeVoiture.getSelectedItem().toString());
-            JLabel marque = new JLabel(laVoiture.getMarque());
-            JLabel modele = new JLabel(laVoiture.getModele());
-            JLabel vitesseMax = new JLabel(String.valueOf(laVoiture.getVitesseMax()));
-            JLabel km = new JLabel(String.valueOf(laVoiture.getKm()));
-            JLabel etat = new JLabel(laVoiture.getEtat());
-            JLabel puissance = new JLabel(String.valueOf(laVoiture.getPuissance()));
-            JLabel prix = new JLabel(String.valueOf(laVoiture.getPrixLocation()));
-            JLabel nbPlace = new JLabel(String.valueOf(laVoiture.getNbPlaces()));
+            marque.setText(laVoiture.getMarque());
+            modele.setText(laVoiture.getModele());
+            vitesseMax.setText(String.valueOf(laVoiture.getVitesseMax()));
+            km.setText(String.valueOf(laVoiture.getKm()));
+            etat.setText(laVoiture.getEtat());
+            puissance.setText(String.valueOf(laVoiture.getPuissance()));
+            prix.setText(String.valueOf(laVoiture.getPrixLocation()));
+            nbPlace.setText(String.valueOf(laVoiture.getNbPlaces()));
 
             panelMarque.add(marque);
             panelModele.add(modele);
@@ -138,6 +156,7 @@ public class PageVoiture extends JFrame implements ActionListener {
             panelInfo.add(panelPuissance);
             panelInfo.add(panelPrix);
             panelInfo.add(panelNbPlaces);
+
 
         }
 
@@ -189,6 +208,7 @@ public class PageVoiture extends JFrame implements ActionListener {
         listeVoiture.setPreferredSize(new Dimension(900,50));
         panelBoutons.setPreferredSize(new Dimension(300,300));
         panelFiche.setPreferredSize(new Dimension(600,400));
+        panelInfo.setPreferredSize(new Dimension(300,400));
         panelInfoF.setPreferredSize(new Dimension(300,400));
 
         panelPrincipal.setLayout(borderPrincipal);
@@ -196,19 +216,16 @@ public class PageVoiture extends JFrame implements ActionListener {
         panelPrincipal.add(panelListeVoiture);
         panelPrincipal.add(panelFicheBoutons,BorderLayout.SOUTH);
 
-        panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
-        panelFiche.setBorder(BorderFactory.createLineBorder(Color.red));
-        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
-        panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
+
+        panelFiche.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfo.setBorder(BorderFactory.createLineBorder(Color.black));
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
         modif.addActionListener(this);
         suppr.addActionListener(this);
-
-
-
-
+        listeVoiture.addActionListener(this);
 
         this.setBounds(500, 100, 900, 500);
         this.setResizable(false);
@@ -232,13 +249,28 @@ public class PageVoiture extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource() == listeVoiture){
+
+            laVoiture = ficheInit(listeVoiture.getSelectedItem().toString());
+            marque.setText(laVoiture.getMarque());
+            modele.setText(laVoiture.getModele());
+            vitesseMax.setText(String.valueOf(laVoiture.getVitesseMax()));
+            km.setText(String.valueOf(laVoiture.getKm()));
+            etat.setText(laVoiture.getEtat());
+            puissance.setText(String.valueOf(laVoiture.getPuissance()));
+            prix.setText(String.valueOf(laVoiture.getPrixLocation()));
+            nbPlace.setText(String.valueOf(laVoiture.getNbPlaces()));
+            panelInfo.repaint();
+
+        }
+
     }
 
     public Voiture ficheInit(String voiture) {
 
         Voiture car = null;
         try {
-            FileInputStream fichier = new FileInputStream("./Client/" + voiture + ".xml");
+            FileInputStream fichier = new FileInputStream("./Voitures/" + voiture + ".xml");
             XMLDecoder decoder = new XMLDecoder(fichier);
             car = (Voiture) decoder.readObject();
             decoder.close();
@@ -253,6 +285,49 @@ public class PageVoiture extends JFrame implements ActionListener {
     }
 
 
+// ============================================================
+    public void ajoutListeVoiture(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        File dossier = new File("./Voitures/");
+        File[] fichiersVoitures = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersVoitures.length; i++) {
+
+            String[] tab = fichiersVoitures[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String prenom = nomFichierh[1];
+            String nom = nomFichierh[0];
+            String car = nom + " " + prenom;
+
+            tabVoiture.add(car);
+        }
+
+    }
+
+    // ==========================================================================
+
+    /**
+     * Cette fonction permet de remplir la ComboBox des clients
+     */
+
+    private void comboBoxInit() {
+        listeVoiture.removeAllItems();
+        for (String c : tabVoiture) {
+
+            listeVoiture.addItem(c);
+
+        }
+
+
+    }
 
 }
 

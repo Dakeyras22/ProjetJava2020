@@ -1,9 +1,12 @@
+import java.io.File;
+
 public class Voiture extends VehiculesTerrestre{
     private int nbPlaces;
 
     public Voiture(){
         super();
         this.nbPlaces = 0;
+
 
     }
 

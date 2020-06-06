@@ -106,35 +106,35 @@ public class PageMoto extends JFrame implements ActionListener {
 
 
 
-        if(listeMoto.getSelectedItem() != null) {
-            laMoto = ficheInit(listeMoto.getSelectedItem().toString());
-            JLabel marque = new JLabel(laMoto.getMarque());
-            JLabel modele = new JLabel(laMoto.getModele());
-            JLabel vitesseMax = new JLabel(String.valueOf(laMoto.getVitesseMax()));
-            JLabel km = new JLabel(String.valueOf(laMoto.getKm()));
-            JLabel etat = new JLabel(laMoto.getEtat());
-            JLabel puissance = new JLabel(String.valueOf(laMoto.getPuissance()));
-            JLabel prix = new JLabel(String.valueOf(laMoto.getPrixLocation()));
+            if(listeMoto.getSelectedItem() != null) {
+                laMoto = ficheInit(listeMoto.getSelectedItem().toString());
+                JLabel marque = new JLabel(laMoto.getMarque());
+                JLabel modele = new JLabel(laMoto.getModele());
+                JLabel vitesseMax = new JLabel(String.valueOf(laMoto.getVitesseMax()));
+                JLabel km = new JLabel(String.valueOf(laMoto.getKm()));
+                JLabel etat = new JLabel(laMoto.getEtat());
+                JLabel puissance = new JLabel(String.valueOf(laMoto.getPuissance()));
+                JLabel prix = new JLabel(String.valueOf(laMoto.getPrixLocation()));
 
 
-            panelMarque.add(marque);
-            panelModele.add(modele);
-            panelVitesseMax.add(vitesseMax);
-            panelKm.add(km);
-            panelEtat.add(etat);
-            panelPuissance.add(puissance);
-            panelPrix.add(prix);
+                panelMarque.add(marque);
+                panelModele.add(modele);
+                panelVitesseMax.add(vitesseMax);
+                panelKm.add(km);
+                panelEtat.add(etat);
+                panelPuissance.add(puissance);
+                panelPrix.add(prix);
 
-            panelInfo.setLayout(grilleInfo);
-            panelInfo.add(panelMarque);
-            panelInfo.add(panelModele);
-            panelInfo.add(panelVitesseMax);
-            panelInfo.add(panelKm);
-            panelInfo.add(panelEtat);
-            panelInfo.add(panelPuissance);
-            panelInfo.add(panelPrix);
+                panelInfo.setLayout(grilleInfo);
+                panelInfo.add(panelMarque);
+                panelInfo.add(panelModele);
+                panelInfo.add(panelVitesseMax);
+                panelInfo.add(panelKm);
+                panelInfo.add(panelEtat);
+                panelInfo.add(panelPuissance);
+                panelInfo.add(panelPrix);
 
-        }
+            }
 
         panelMarqueF.add(marqueF);
         panelModeleF.add(modeleF);
