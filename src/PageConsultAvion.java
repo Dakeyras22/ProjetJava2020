@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.FileOutputStream;
 
 public class PageConsultAvion extends JFrame implements ActionListener{
     private JPanel panQuestion = new JPanel();
@@ -177,7 +179,7 @@ public class PageConsultAvion extends JFrame implements ActionListener{
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ModifAvion();
-                PageAccueil pageAccueil = new PageAccueil();
+                PageAvion pageAvion = new PageAvion();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
@@ -201,5 +203,21 @@ public class PageConsultAvion extends JFrame implements ActionListener{
         anAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
         anAvion.setPrixLocation(Integer.parseInt(prix.getText()));
         anAvion.setDisponible(disponible);
+        ecrireAvion(anAvion);
+
+    }
+
+    public void ecrireAvion(Avion anAvion) {
+
+        try {
+            FileOutputStream car = new FileOutputStream("./Avions/"+anAvion.getMarque()+" "+anAvion.getModele()+".xml");
+            XMLEncoder encoder = new XMLEncoder(car);
+            encoder.writeObject(anAvion);
+            encoder.close();
+            car.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }

@@ -192,11 +192,11 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
     public void ecrireAvion(Avion anAvion) {
 
         try {
-            FileOutputStream car = new FileOutputStream("./Avions/"+anAvion.getMarque()+" "+anAvion.getModele()+".xml");
-            XMLEncoder encoder = new XMLEncoder(car);
+            FileOutputStream plane = new FileOutputStream("./Avions/"+anAvion.getMarque()+" "+anAvion.getModele()+".xml");
+            XMLEncoder encoder = new XMLEncoder(plane);
             encoder.writeObject(anAvion);
             encoder.close();
-            car.close();
+            plane.close();
         }
         catch(Exception e){
             System.out.println(e);

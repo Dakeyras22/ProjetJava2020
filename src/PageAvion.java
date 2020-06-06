@@ -236,6 +236,13 @@ public class PageAvion extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource()==modif){
+
+            avion = ficheInit(listeAvion.getSelectedItem().toString());
+            PageConsultAvion pageConsult = new PageConsultAvion(avion);
+            this.setVisible(false);
+        }
+
         if (e.getSource() == listeAvion){
             avion = ficheInit(listeAvion.getSelectedItem().toString());
             marque.setText(avion.getMarque());

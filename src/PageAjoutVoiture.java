@@ -216,7 +216,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     public void ecrireVoiture(Voiture aVoiture) {
 
         try {
-            new File("./Voitures").mkdir();
+
             FileOutputStream car = new FileOutputStream("./Voitures/"+aVoiture.getMarque()+" "+aVoiture.getModele()+".xml");
             XMLEncoder encoder = new XMLEncoder(car);
             encoder.writeObject(aVoiture);

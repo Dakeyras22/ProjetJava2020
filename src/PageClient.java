@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLDecoder;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -38,6 +40,13 @@ public class PageClient extends JFrame implements ActionListener {
     private JPanel panelTelephone;
     private JPanel panelMail;
 
+    private JLabel nom;
+    private JLabel prenom;
+    private JLabel  dateDeNaissance;
+    private JLabel adresse;
+    private JLabel telephone;
+    private JLabel mail;
+
     private JButton retour;
     private JButton suppr;
     private JButton ajout;
@@ -45,7 +54,7 @@ public class PageClient extends JFrame implements ActionListener {
 
     private Client leGars;
 
-    private ArrayList<String> tabClients;
+    private ArrayList<String> tabClients = new ArrayList<>();
 
 
     public PageClient(){
@@ -97,16 +106,20 @@ public class PageClient extends JFrame implements ActionListener {
         panelAdresse = new JPanel();
         panelTelephone = new JPanel();
         panelMail = new JPanel();
+        ajoutListeClient();
+        if(!tabClients.isEmpty()){
+            comboBoxInit();
+        }
 
 
         if(listeClients.getSelectedItem() != null) {
             leGars = ficheInit(listeClients.getSelectedItem().toString());
-            JLabel nom = new JLabel(leGars.getNom());
-            JLabel prenom = new JLabel(leGars.getPrenom());
-            JLabel  dateDeNaissance = new JLabel(leGars.getDateNaissance());
-            JLabel adresse = new JLabel(leGars.getAdresse());
-            JLabel telephone = new JLabel(leGars.getTelephone());
-            JLabel mail = new JLabel(leGars.getMail());
+            nom = new JLabel(leGars.getNom());
+            prenom = new JLabel(leGars.getPrenom());
+            dateDeNaissance = new JLabel(leGars.getDateNaissance());
+            adresse = new JLabel(leGars.getAdresse());
+            telephone = new JLabel(leGars.getTelephone());
+            mail = new JLabel(leGars.getMail());
 
             panelNom.add(nom);
             panelPrenom.add(prenom);
@@ -170,21 +183,23 @@ public class PageClient extends JFrame implements ActionListener {
         panelBoutons.setPreferredSize(new Dimension(300,300));
         panelFiche.setPreferredSize(new Dimension(600,400));
         panelInfoF.setPreferredSize(new Dimension(300,400));
+        panelInfo.setPreferredSize(new Dimension(300,400));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
         panelPrincipal.add(panelListeClient);
         panelPrincipal.add(panelFicheBoutons,BorderLayout.SOUTH);
 
-        panelBoutons.setBorder(BorderFactory.createLineBorder(Color.black));
-        panelFiche.setBorder(BorderFactory.createLineBorder(Color.red));
-        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.blue));
-        panelInfo.setBorder(BorderFactory.createLineBorder(Color.green));
+
+        panelFiche.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfoF.setBorder(BorderFactory.createLineBorder(Color.black));
+        panelInfo.setBorder(BorderFactory.createLineBorder(Color.black));
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
         modif.addActionListener(this);
         suppr.addActionListener(this);
+        listeClients.addActionListener(this);
 
         this.setBounds(500, 100, 900, 500);
         this.setResizable(false);
@@ -207,6 +222,17 @@ public class PageClient extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource() == listeClients){
+            leGars = ficheInit(listeClients.getSelectedItem().toString());
+            nom.setText(leGars.getNom());
+            prenom.setText(leGars.getPrenom());
+            dateDeNaissance.setText(leGars.getDateNaissance());
+            adresse.setText(leGars.getAdresse());
+            telephone.setText(leGars.getTelephone());
+            mail.setText(leGars.getMail());
+            panelInfo.repaint();
+        }
+
     }
 
     public Client ficheInit(String client) {
@@ -226,6 +252,54 @@ public class PageClient extends JFrame implements ActionListener {
         }
         return mec;
     }
+
+    // ============================================================
+    public void ajoutListeClient(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        new File("./Client").mkdir();
+        File dossier = new File("./Client/");
+        File[] fichiersVoitures = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersVoitures.length; i++) {
+
+            String[] tab = fichiersVoitures[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String prenom = nomFichierh[1];
+            String nom = nomFichierh[0];
+            String mec = nom + " " + prenom;
+
+            tabClients.add(mec);
+        }
+
+    }
+
+    // ==========================================================================
+
+    /**
+     * Cette fonction permet de remplir la ComboBox des voitures
+     */
+
+    private void comboBoxInit() {
+        listeClients.removeAllItems();
+        for (String c : tabClients) {
+
+            listeClients.addItem(c);
+
+        }
+
+
+    }
+
+
+
 
 
 
