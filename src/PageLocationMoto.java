@@ -12,9 +12,11 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
     public JComboBox listeClients;
     public JComboBox listeMoto;
+    public JComboBox listeFiches;
     private JPanel panelListes;
     private JPanel panelListeClient;
     private JPanel panelListeMoto;
+    private JPanel panelListeFiches;
     private JPanel panelPrincipal;
     private JPanel panelFicheBoutons;
     private JPanel panelBoutons;
@@ -74,7 +76,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
         BorderLayout borderPrincipal = new BorderLayout();
         BorderLayout borderFicheBoutons = new BorderLayout();
-        GridLayout grilleListes = new GridLayout(2,1);
+        GridLayout grilleListes = new GridLayout(3,1);
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
         GridLayout grilleBoutons = new GridLayout(3,1);
         BorderLayout borderFiche = new BorderLayout();
@@ -86,10 +88,12 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         consult = new JButton("Consulter fiches");
 
         listeClients = new JComboBox();
+        listeFiches = new JComboBox();
         panelListeClient = new JPanel();
         listeMoto = new JComboBox();
         panelListes = new JPanel();
         panelListeMoto = new JPanel();
+        panelListeFiches = new JPanel();
         panelPrincipal = new JPanel();
         panelFicheBoutons = new JPanel();
         panelFiche = new JPanel();
@@ -183,6 +187,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
         panelListeClient.add(listeClients);
         panelListeMoto.add(listeMoto);
+        panelListeFiches.add(listeFiches);
         panelFiche.setLayout(borderFiche);
         panelFiche.add(panelInfoClient,BorderLayout.WEST);
         panelFiche.add(panelInfoMoto,BorderLayout.EAST);
@@ -203,14 +208,16 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
         panelListes.add(panelListeMoto);
+        panelListes.add(panelListeFiches);
 
-        panelListes.setSize(new Dimension(900,50));
+        panelListes.setSize(new Dimension(900,125));
         listeClients.setPreferredSize(new Dimension(900,25));
         listeMoto.setPreferredSize(new Dimension(900,25));
+        listeFiches.setPreferredSize(new Dimension(900,25));
         panelBoutons.setPreferredSize(new Dimension(300,300));
-        panelFiche.setPreferredSize(new Dimension(600,400));
-        panelInfoClient.setPreferredSize(new Dimension(300,400));
-        panelInfoMoto.setPreferredSize(new Dimension(300,400));
+        panelFiche.setPreferredSize(new Dimension(600,375));
+        panelInfoClient.setPreferredSize(new Dimension(300,375));
+        panelInfoMoto.setPreferredSize(new Dimension(300,375));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);

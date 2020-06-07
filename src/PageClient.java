@@ -106,6 +106,7 @@ public class PageClient extends JFrame implements ActionListener {
         panelAdresse = new JPanel();
         panelTelephone = new JPanel();
         panelMail = new JPanel();
+
         ajoutListeClient();
         if(!tabClients.isEmpty()){
             comboBoxInit();

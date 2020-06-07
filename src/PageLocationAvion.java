@@ -12,9 +12,11 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
     public JComboBox listeClients;
     public JComboBox listeAvion;
+    public JComboBox listeFiches;
     private JPanel panelListes;
     private JPanel panelListeClient;
     private JPanel panelListeAvion;
+    private JPanel panelListeFiches;
     private JPanel panelPrincipal;
     private JPanel panelFicheBoutons;
     private JPanel panelBoutons;
@@ -74,7 +76,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
         BorderLayout borderPrincipal = new BorderLayout();
         BorderLayout borderFicheBoutons = new BorderLayout();
-        GridLayout grilleListes = new GridLayout(2,1);
+        GridLayout grilleListes = new GridLayout(3,1);
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
         GridLayout grilleBoutons = new GridLayout(3,1);
         BorderLayout borderFiche = new BorderLayout();
@@ -83,13 +85,15 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
         retour = new JButton("Retour");
         ajout = new JButton("Ajouter Fiche");
-        consult = new JButton("Consulter fiches");
+        consult = new JButton("Consulter fiches du client");
 
         listeClients = new JComboBox();
         panelListeClient = new JPanel();
         listeAvion = new JComboBox();
+        listeFiches = new JComboBox();
         panelListes = new JPanel();
         panelListeAvion = new JPanel();
+        panelListeFiches = new JPanel();
         panelPrincipal = new JPanel();
         panelFicheBoutons = new JPanel();
         panelFiche = new JPanel();
@@ -183,6 +187,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
         panelListeClient.add(listeClients);
         panelListeAvion.add(listeAvion);
+        panelListeFiches.add(listeFiches);
         panelFiche.setLayout(borderFiche);
         panelFiche.add(panelInfoClient,BorderLayout.WEST);
         panelFiche.add(panelInfoAvion,BorderLayout.EAST);
@@ -203,14 +208,16 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
         panelListes.add(panelListeAvion);
+        panelListes.add(panelListeFiches);
 
-        panelListes.setSize(new Dimension(900,50));
+        panelListes.setSize(new Dimension(900,125));
         listeClients.setPreferredSize(new Dimension(900,25));
         listeAvion.setPreferredSize(new Dimension(900,25));
+        listeFiches.setPreferredSize(new Dimension(900,25));
         panelBoutons.setPreferredSize(new Dimension(300,300));
-        panelFiche.setPreferredSize(new Dimension(600,400));
-        panelInfoClient.setPreferredSize(new Dimension(300,400));
-        panelInfoAvion.setPreferredSize(new Dimension(300,400));
+        panelFiche.setPreferredSize(new Dimension(600,375));
+        panelInfoClient.setPreferredSize(new Dimension(300,375));
+        panelInfoAvion.setPreferredSize(new Dimension(300,375));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
@@ -346,6 +353,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
             String marque = nomFichierh[0];
             String plane = marque + " " + modele;
 
+
             tabAvions.add(plane);
         }
 
@@ -366,6 +374,8 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         File dossier = new File("./Client/");
         File[] fichiersVoitures = dossier.listFiles(filtre);
         for (i = 0; i < fichiersVoitures.length; i++) {
+
+            //if ficheInitAvion()
 
             String[] tab = fichiersVoitures[i].toString().split("/");
             String[] nomFichier = tab[2].split(".xml");

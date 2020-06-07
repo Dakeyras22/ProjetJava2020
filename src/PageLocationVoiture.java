@@ -12,9 +12,11 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
     public JComboBox listeClients;
     public JComboBox listeVoiture;
+    public JComboBox listeFiches;
     private JPanel panelListes;
     private JPanel panelListeClient;
     private JPanel panelListeVoiture;
+    private JPanel panelListeFiches;
     private JPanel panelPrincipal;
     private JPanel panelFicheBoutons;
     private JPanel panelBoutons;
@@ -68,13 +70,14 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
     private ArrayList<String> tabClients = new ArrayList<>();
     private ArrayList<String> tabVoitures = new ArrayList<>();
+    private ArrayList<String> tabLocations = new ArrayList<>();
 
 
     public PageLocationVoiture(){
 
         BorderLayout borderPrincipal = new BorderLayout();
         BorderLayout borderFicheBoutons = new BorderLayout();
-        GridLayout grilleListes = new GridLayout(2,1);
+        GridLayout grilleListes = new GridLayout(3,1);
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
         GridLayout grilleBoutons = new GridLayout(3,1);
         BorderLayout borderFiche = new BorderLayout();
@@ -86,10 +89,12 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         consult = new JButton("Consulter fiches");
 
         listeClients = new JComboBox();
+        listeFiches = new JComboBox();
         panelListeClient = new JPanel();
         listeVoiture = new JComboBox();
         panelListes = new JPanel();
         panelListeVoiture = new JPanel();
+        panelListeFiches = new JPanel();
         panelPrincipal = new JPanel();
         panelFicheBoutons = new JPanel();
         panelFiche = new JPanel();
@@ -186,6 +191,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
         panelListeClient.add(listeClients);
         panelListeVoiture.add(listeVoiture);
+        panelListeFiches.add(listeFiches);
         panelFiche.setLayout(borderFiche);
         panelFiche.add(panelInfoClient,BorderLayout.WEST);
         panelFiche.add(panelInfoVoiture,BorderLayout.EAST);
@@ -206,14 +212,16 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
         panelListes.add(panelListeVoiture);
+        panelListes.add(panelListeFiches);
 
-        panelListes.setSize(new Dimension(900,50));
+        panelListes.setSize(new Dimension(900,125));
         listeClients.setPreferredSize(new Dimension(900,25));
         listeVoiture.setPreferredSize(new Dimension(900,25));
+        listeFiches.setPreferredSize(new Dimension(900,25));
         panelBoutons.setPreferredSize(new Dimension(300,300));
-        panelFiche.setPreferredSize(new Dimension(600,400));
-        panelInfoClient.setPreferredSize(new Dimension(300,400));
-        panelInfoVoiture.setPreferredSize(new Dimension(300,400));
+        panelFiche.setPreferredSize(new Dimension(600,375));
+        panelInfoClient.setPreferredSize(new Dimension(300,375));
+        panelInfoVoiture.setPreferredSize(new Dimension(300,375));
 
         panelPrincipal.setLayout(borderPrincipal);
         this.setContentPane(panelPrincipal);
@@ -307,6 +315,25 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
     }
 
 
+    public FicheLocation ficheInitLocation(String location) {
+
+        FicheLocation fiche = null;
+        try {
+            FileInputStream fichier = new FileInputStream("./Client/" + location + ".xml");
+            XMLDecoder decoder = new XMLDecoder(fichier);
+            fiche = (FicheLocation) decoder.readObject();
+            decoder.close();
+            fichier.close();
+
+        }
+
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return fiche;
+    }
+
+
 
     public Voiture ficheInitVoiture(String voiture) {
 
@@ -381,6 +408,42 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         }
 
     }
+
+    // ===================================================================
+
+    public void ajoutListeLocation(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        new File("./Location").mkdir();
+
+        File dossier = new File("./Location/");
+        File[] fichiersVoitures = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersVoitures.length; i++) {
+
+            String[] tab = fichiersVoitures[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String modele = nomFichierh[1];
+            String nom = nomFichierh[0];
+            String location = nom + " " + modele;
+            Client aClient = ficheInitLocation(location).getaClient();
+            Vehicules aVehicule = ficheInitLocation(location).getaVehicule();
+
+            if(aClient == listeClients.getSelectedItem() && aVehicule == listeVoiture.getSelectedItem()) {
+                tabLocations.add(location);
+            }
+        }
+
+    }
+
+    // =============================================================================
 
 
     private void comboBoxClientInit() {
