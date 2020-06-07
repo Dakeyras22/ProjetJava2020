@@ -9,13 +9,13 @@ public class VehiculesTerrestre extends Vehicules {
         this.puissance = 0;
     }
 
+    /* ======================================== Getters and Setters =========================================*/
+
     public int getKm() {
         return km;
     }
 
-    public void setKm(int km) {
-        this.km = km;
-    }
+    public void setKm(int km) { this.km = km; }
 
     public int getPuissance() {
         return puissance;

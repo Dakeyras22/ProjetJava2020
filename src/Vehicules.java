@@ -15,6 +15,8 @@ public class Vehicules {
         this.disponible = true;
     }
 
+    /* ======================================== Getters and Setters =========================================*/
+
     public String getEtat() {
         return etat;
     }
@@ -55,9 +57,7 @@ public class Vehicules {
         this.prixLocation = prixLocation;
     }
 
-    public boolean getDisponible(){
-        return disponible;
-    }
+    public boolean getDisponible(){ return disponible; }
 
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;

@@ -9,6 +9,8 @@ public class Avion extends Vehicules{
         this.nbMoteur = 0;
     }
 
+    /* ======================================== Getters and Setters =========================================*/
+
     public int getNbHeureVol() {
         return nbHeureVol;
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="12.0.1" class="java.beans.XMLDecoder">
+ <object class="Client">
+  <void property="adresse">
+   <string>6 place du miroir</string>
+  </void>
+  <void property="dateNaissance">
+   <string>02/10/1998</string>
+  </void>
+  <void property="mail">
+   <string>bastien.maubon@gmail.com</string>
+  </void>
+  <void property="nom">
+   <string>Maubon</string>
+  </void>
+  <void property="prenom">
+   <string>Bastien</string>
+  </void>
+  <void property="telephone">
+   <string>0625341633</string>
+  </void>
+ </object>
+</java>

@@ -6,9 +6,9 @@ public class Voiture extends VehiculesTerrestre{
     public Voiture(){
         super();
         this.nbPlaces = 0;
-
-
     }
+
+    /* ======================================== Getters and Setters =========================================*/
 
     public int getNbPlaces() {
         return nbPlaces;
