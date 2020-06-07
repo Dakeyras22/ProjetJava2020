@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="12.0.2" class="java.beans.XMLDecoder">
+ <object class="Client">
+  <void property="adresse">
+   <string>31 résidence de bel Air</string>
+  </void>
+  <void property="dateNaissance">
+   <string>18/10/1998</string>
+  </void>
+  <void property="mail">
+   <string>kvznejnio</string>
+  </void>
+  <void property="nom">
+   <string>Maubon</string>
+  </void>
+  <void property="prenom">
+   <string>Bastien</string>
+  </void>
+  <void property="telephone">
+   <string>jivjeii</string>
+  </void>
+ </object>
+</java>
