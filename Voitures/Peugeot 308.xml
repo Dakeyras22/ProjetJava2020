@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="12.0.1" class="java.beans.XMLDecoder">
- <object class="Avion">
-  <void property="disponible">
-   <boolean>false</boolean>
-  </void>
+ <object class="Voiture">
   <void property="marque">
-   <string>Airbus</string>
+   <string>Peugeot</string>
   </void>
   <void property="modele">
-   <string>A380</string>
+   <string>308</string>
   </void>
-  <void property="nbMoteur">
-   <int>9</int>
+  <void property="nbPlaces">
+   <int>5</int>
   </void>
   <void property="prixLocation">
-   <int>1200</int>
+   <int>50</int>
+  </void>
+  <void property="puissance">
+   <int>180</int>
   </void>
   <void property="vitesseMax">
-   <int>3000</int>
+   <int>220</int>
   </void>
  </object>
 </java>

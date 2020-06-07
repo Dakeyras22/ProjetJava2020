@@ -2,9 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 
-public class PageRenduFiche extends JFrame implements ActionListener {
+public class PageConsultFiche extends JFrame implements ActionListener {
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panAjout = new JPanel();
@@ -13,46 +12,60 @@ public class PageRenduFiche extends JFrame implements ActionListener {
     private JPanel panTxtDateFin = new JPanel();
     private JPanel panTxtNbJours = new JPanel();
     private JPanel panTxtNbKmPrevu = new JPanel();
-    private JPanel panTxtPrixPrevu = new JPanel();
-    private JPanel panTxtNbKmFinal = new JPanel();
+    private JPanel panTxtPrix = new JPanel();
     private JPanel panInfoDateDebut = new JPanel();
     private JPanel panInfoDateFin = new JPanel();
     private JPanel panInfoNbJours = new JPanel();
     private JPanel panInfoNbKmPrevu = new JPanel();
-    private JPanel panInfoPrixPrevu = new JPanel();
-    private JPanel panInfoNbKmFinal = new JPanel();
-    private JLabel question = new JLabel("Veuillez compléter et ajuster les informations de la fiche de fin de location.");
+    private JPanel panInfoPrix = new JPanel();
+    private JLabel question = new JLabel("Voici les infos de la fiche de location que vous pouvez modifier.");
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
     private JLabel txtDateDebut = new JLabel("Date de début : ");
     private JLabel txtDateFin = new JLabel("Date de fin : ");
     private JLabel txtNbJours = new JLabel("Nombre de jours : ");
-    private JLabel txtNbKmPrevu = new JLabel("Nombre de Km prévus : ");
-    private JLabel txtPrixPrevu = new JLabel("Prix prévu : ");
-    private JLabel txtNbKmFinal = new JLabel("Nombre de km final : ");
-    private JLabel dateDebut = new JLabel();
+    private JLabel txtNbKmPrevu = new JLabel();
+    private JLabel txtPrix = new JLabel();
+    private JTextField dateDebut = new JTextField();
     private JTextField dateFin = new JTextField();
     private JTextField nbJours = new JTextField();
-    private JLabel nbKmPrevu = new JLabel();
-    private JLabel prixPrevu = new JLabel();
-    private JTextField nbKmFinal = new JTextField();
+    private JTextField nbKmPrevu = new JTextField();
+    private JLabel prix = new JLabel();
     private JButton ajout = new JButton("Terminer");
     private JButton retour = new JButton("Retour");
     private FicheLocation ficheLocation;
+    private Vehicules vehicule;
+    private Client client;
+    private boolean rendu = true;
 
-    public PageRenduFiche(FicheLocation aFicheLocation){
+    public void PageConsultFiche(FicheLocation aFicheLocation){
         ficheLocation = aFicheLocation;
+        vehicule = ficheLocation.getaVehicule();
+        client = ficheLocation.getaClient();
 
-        dateDebut.setText(ficheLocation.getDateDebut());
-        nbKmPrevu.setText(String.valueOf(ficheLocation.getKmPrevu()));
-        prixPrevu.setText(String.valueOf(ficheLocation.getPrixPrevu()));
+        if(ficheLocation.getPrixFinal()==0){
+            rendu = false;
+        }
+
+        if(rendu==true){
+            txtNbKmPrevu.setText("Nombre de km final :");
+            txtPrix.setText("Prix final :");
+            nbKmPrevu.setText(String.valueOf(ficheLocation.getKmFinal()));
+            prix.setText(String.valueOf(ficheLocation.getPrixFinal()));
+        }else{
+            txtNbKmPrevu.setText("Nombre de km prévu :");
+            txtPrix.setText("Prix prévu :");
+            nbKmPrevu.setText(String.valueOf(ficheLocation.getKmFinal()));
+            prix.setText(String.valueOf(ficheLocation.getPrixFinal()));
+        }
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
 
+        dateDebut.setPreferredSize(new Dimension(150,30));
         dateFin.setPreferredSize(new Dimension(150,30));
         nbJours.setPreferredSize(new Dimension(150,30));
-        nbKmFinal.setPreferredSize(new Dimension(150,30));
+        nbKmPrevu.setPreferredSize(new Dimension(150,30));
 
         panQuestion.add(question, BorderLayout.CENTER);
         panQuestion.setBackground(Color.white);
@@ -70,10 +83,6 @@ public class PageRenduFiche extends JFrame implements ActionListener {
         panTxtNbJours.setBackground(Color.white);
         panTxtNbKmPrevu.add(txtNbKmPrevu, BorderLayout.CENTER);
         panTxtNbKmPrevu.setBackground(Color.white);
-        panTxtPrixPrevu.add(txtPrixPrevu, BorderLayout.CENTER);
-        panTxtPrixPrevu.setBackground(Color.white);
-        panTxtNbKmFinal.add(txtNbKmFinal, BorderLayout.CENTER);
-        panTxtNbKmFinal.setBackground(Color.white);
         panInfoDateDebut.add(dateDebut, BorderLayout.CENTER);
         panInfoDateDebut.setBackground(Color.white);
         panInfoDateFin.add(dateFin, BorderLayout.CENTER);
@@ -82,14 +91,10 @@ public class PageRenduFiche extends JFrame implements ActionListener {
         panInfoNbJours.setBackground(Color.white);
         panInfoNbKmPrevu.add(nbKmPrevu, BorderLayout.CENTER);
         panInfoNbKmPrevu.setBackground(Color.white);
-        panInfoPrixPrevu.add(prixPrevu, BorderLayout.CENTER);
-        panInfoPrixPrevu.setBackground(Color.white);
-        panInfoNbKmFinal.add(nbKmFinal, BorderLayout.CENTER);
-        panInfoNbKmFinal.setBackground(Color.white);
 
-        this.setTitle("Page de rendu d'une fiche de location");
+        this.setTitle("Page d'ajout d'une fiche de location");
         this.setResizable(false);
-        this.setSize(550,500);
+        this.setSize(500,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -103,8 +108,6 @@ public class PageRenduFiche extends JFrame implements ActionListener {
         bTxt.add(panTxtDateFin);
         bTxt.add(panTxtNbJours);
         bTxt.add(panTxtNbKmPrevu);
-        bTxt.add(panTxtPrixPrevu);
-        bTxt.add(panTxtNbKmFinal);
 
         JPanel bInfo = new JPanel();
         bInfo.setLayout(new BoxLayout(bInfo, BoxLayout.PAGE_AXIS));
@@ -112,8 +115,6 @@ public class PageRenduFiche extends JFrame implements ActionListener {
         bInfo.add(panInfoDateFin);
         bInfo.add(panInfoNbJours);
         bInfo.add(panInfoNbKmPrevu);
-        bInfo.add(panInfoPrixPrevu);
-        bInfo.add(panInfoNbKmFinal);
 
         JPanel b2 = new JPanel();
         b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
@@ -143,47 +144,46 @@ public class PageRenduFiche extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         if(e.getSource()==retour){
             //PageFiche pageFiche = new PageFiche();
             this.dispose();
-        }else if(e.getSource() == ajout){
-            if (dateFin.getText().equals("") || nbJours.getText().equals("")  || nbKmFinal.getText().equals("")){
+        }else if(e.getSource()==ajout){
+            if (dateDebut.getText().equals("") || dateFin.getText().equals("") || nbJours.getText().equals("")
+                    || nbKmPrevu.getText().equals("")){
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
-                modifFiche(dateFin.getText(), nbJours.getText(), nbKmFinal.getText());
+                ajoutFiche(dateDebut.getText(), dateFin.getText(),nbJours.getText(), nbKmPrevu.getText());
                 this.dispose();
             }
         }
     }
 
-    public void modifFiche(String dateFin, String nbJours, String nbKmFinal){
-        double prixFinal = 0;
-        int kmFinal = Integer.parseInt(nbKmFinal);
+    public void ajoutFiche(String dateDebut, String dateFin, String nbJours, String nbKmPrevu) {
+        double prixPrevu = 0;
+        int kmPrevu = Integer.parseInt(nbKmPrevu);
         int jours = Integer.parseInt(nbJours);
-        Vehicules vehicule = ficheLocation.getaVehicule();
         boolean reduc;
-        if (kmFinal < 50) {
-            prixFinal = jours * vehicule.getPrixLocation();
-        } else if (kmFinal <= 100) {
-            prixFinal = jours * vehicule.getPrixLocation() + (kmFinal - 50) * 0.5;
-        } else if (kmFinal <= 200) {
-            prixFinal = jours * vehicule.getPrixLocation() + 50 * 0.5 + (kmFinal - 100) * 0.3;
-        } else if (kmFinal <= 300) {
-            prixFinal = jours * vehicule.getPrixLocation() + 50 * 0.5 + 100 * 0.3 + (kmFinal - 200) * 0.2;
-        } else if (kmFinal >= 300) {
-            prixFinal = jours * vehicule.getPrixLocation() + 50 * 0.5 + 100 * 0.3 + 100 * 0.2 + (kmFinal - 300) * 0.1;
+        if (kmPrevu < 50) {
+            prixPrevu = jours * vehicule.getPrixLocation();
+        } else if (kmPrevu <= 100) {
+            prixPrevu = jours * vehicule.getPrixLocation() + (kmPrevu - 50) * 0.5;
+        } else if (kmPrevu <= 200) {
+            prixPrevu = jours * vehicule.getPrixLocation() + 50 * 0.5 + (kmPrevu - 100) * 0.3;
+        } else if (kmPrevu <= 300) {
+            prixPrevu = jours * vehicule.getPrixLocation() + 50 * 0.5 + 100 * 0.3 + (kmPrevu - 200) * 0.2;
+        } else if (kmPrevu >= 300) {
+            prixPrevu = jours * vehicule.getPrixLocation() + 50 * 0.5 + 100 * 0.3 + 100 * 0.2 + (kmPrevu - 300) * 0.1;
         }
         if(jours>7){
             reduc = true;
         }else{
             reduc = false;
         }
-        ficheLocation.setDateFin(dateFin);
-        ficheLocation.setNbJours(jours);
-        ficheLocation.setKmFinal(kmFinal);
-        ficheLocation.setPrixFinal(prixFinal);
-        vehicule.setDisponible(true);
-        new PrixPopUp(prixFinal, reduc, ficheLocation, true);
+        FicheLocation ficheLocation = new FicheLocation(client, vehicule, dateDebut, dateFin, Integer.parseInt(nbJours),
+                Integer.parseInt(nbKmPrevu), prixPrevu);
+        new PrixPopUp(prixPrevu, reduc, ficheLocation, rendu);
+        vehicule.setDisponible(false);
     }
+
 }

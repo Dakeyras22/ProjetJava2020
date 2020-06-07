@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 public class PageAjoutAvion extends JFrame implements ActionListener{
+
+    /* =================================================================================================*/
+    /*==========Creation des JPanel,JButton,JRadioButton, JTextField et JLabel nécessaires==============*/
+    /* =================================================================================================*/
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -53,10 +57,12 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
 
     public PageAjoutAvion(){
 
+        /*choix des polices d'écriture*/
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
 
+        /*redimension des JTextField*/
         marque.setPreferredSize(new Dimension(150,30));
         modele.setPreferredSize(new Dimension(150,30));
         etat.setPreferredSize(new Dimension(150,30));
@@ -65,6 +71,7 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         nbMoteur.setPreferredSize(new Dimension(150,30));
         prix.setPreferredSize(new Dimension(150,30));
 
+        /*paramétrages des JRadioButton*/
         buttonGroup.add(dispo);
         buttonGroup.add(indispo);
         panInfoDispo.setLayout(new BoxLayout(panInfoDispo, BoxLayout.LINE_AXIS));
@@ -72,6 +79,7 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         panInfoDispo.add(indispo);
         panInfoDispo.setBackground(Color.white);
 
+        /*remplissage des panels et change la couleur du fond en blanc*/
         panQuestion.add(question, BorderLayout.CENTER);
         panQuestion.setBackground(Color.white);
         panSlogan.add(slogan, BorderLayout.CENTER);
@@ -111,12 +119,14 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         panTxtDispo.add(txtDispo, BorderLayout.CENTER);
         panTxtDispo.setBackground(Color.white);
 
+        /*paramètres de la frame*/
         this.setTitle("Page d'ajout d'un avion");
         this.setResizable(false);
         this.setSize(500,500);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        /*création de panels intermédiaires pour bien positionner les différents composants*/
         JPanel b1 = new JPanel();
         b1.setLayout(new BoxLayout(b1, BoxLayout.LINE_AXIS));
         b1.add(panQuestion);
@@ -146,36 +156,47 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         b3.setLayout(new BoxLayout(b3, BoxLayout.LINE_AXIS));
         b3.add(panSlogan);
 
+        /*création du panel final de la frame*/
         JPanel b4 = new JPanel();
         b4.setLayout(new BoxLayout(b4, BoxLayout.PAGE_AXIS));
         b4.add(b1);
         b4.add(b2);
         b4.add(b3);
 
+        /*ajout d'action listener sur les boutons*/
         ajout.addActionListener(this);
         retour.addActionListener(this);
 
+        /*ajout du panel final dans la frame et affichage de la frame*/
         this.getContentPane().add(b4);
         this.setVisible(true);
     }
 
+    /* =================================================================================================*/
+    /* ==========================ActionListener des boutons ajout et retour=============================*/
+    /* =================================================================================================*/
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == ajout) {
+        if (e.getSource() == ajout) { //si on clique sur le bouton ajout
             if (marque.getText().equals("") || modele.getText().equals("") || etat.getText().equals("")
-                    || nbHeureVol.getText().equals("") || vitesseMax.getText().equals("") || nbMoteur.getText().equals("")
-                    || prix.getText().equals("")) {
+                    || nbHeureVol.getText().equals("") || vitesseMax.getText().equals("")
+                    || nbMoteur.getText().equals("")
+                    || prix.getText().equals("")) { //Si au moins un champ est pas rempli
                 BlankPopUp blankPopUp = new BlankPopUp();
-            } else {
-                ajoutAvion();
-                PageAvion pageAvion = new PageAvion();
-                this.dispose();
+                //une fenêtre apparait pour demander que tous les champs soient remplis
+            } else { //si tous les champs sont remplis
+                ajoutAvion(); //lance la fonction ajoutAvion
+                PageAvion pageAvion = new PageAvion(); //ouvre la fenêtre où l'on peut sélectionner les avions
+                this.dispose();//ferme la fenêtre actuelle
             }
-        } else if (e.getSource() == retour) {
-            new PageAvion();
+        } else if (e.getSource() == retour) { //si on appui sur le bouton ret
+            new PageAvion(); //ouvre la page des avions
         }
-        this.dispose();
+        this.dispose(); //ferme la fenetre actuelle
     }
 
+    /* =================================================================================================*/
+    /* ================crée un avion en utilisant les informations des JTextfields======================*/
+    /* =================================================================================================*/
     public void ajoutAvion(){
         Avion aAvion = new Avion();
         aAvion.setMarque(marque.getText());
@@ -186,9 +207,13 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         aAvion.setNbMoteur(Integer.parseInt(nbMoteur.getText()));
         aAvion.setPrixLocation(Integer.parseInt(prix.getText()));
         aAvion.setDisponible(disponible);
-        ecrireAvion(aAvion);
+
+        ecrireAvion(aAvion); //lance la fonction ecrireAvion
     }
 
+    /* =================================================================================================*/
+    /* ==========================Sérialisation d'un avion passé en argument=============================*/
+    /* =================================================================================================*/
     public void ecrireAvion(Avion anAvion) {
 
         try {

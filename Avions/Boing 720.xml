@@ -4,20 +4,26 @@
   <void property="disponible">
    <boolean>false</boolean>
   </void>
+  <void property="etat">
+   <string>mauvais</string>
+  </void>
   <void property="marque">
-   <string>Airbus</string>
+   <string>Boing</string>
   </void>
   <void property="modele">
-   <string>A380</string>
+   <string>720</string>
+  </void>
+  <void property="nbHeureVol">
+   <int>1000</int>
   </void>
   <void property="nbMoteur">
-   <int>9</int>
+   <int>7</int>
   </void>
   <void property="prixLocation">
-   <int>1200</int>
+   <int>200</int>
   </void>
   <void property="vitesseMax">
-   <int>3000</int>
+   <int>2000</int>
   </void>
  </object>
 </java>

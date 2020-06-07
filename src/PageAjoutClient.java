@@ -6,6 +6,10 @@ import java.beans.XMLEncoder;
 import java.io.FileOutputStream;
 
 public class PageAjoutClient extends JFrame implements ActionListener {
+
+    /* =================================================================================================*/
+    /*==========Creation des JPanel,JButton,JRadioButton, JTextField et JLabel nécessaires==============*/
+    /* =================================================================================================*/
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panAjout = new JPanel();
@@ -40,6 +44,8 @@ public class PageAjoutClient extends JFrame implements ActionListener {
     private JButton retour = new JButton("Retour");
 
     public PageAjoutClient(){
+
+        /*choix des polices d'écriture*/
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));

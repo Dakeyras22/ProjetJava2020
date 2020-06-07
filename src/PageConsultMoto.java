@@ -6,6 +6,8 @@ import java.beans.XMLEncoder;
 import java.io.FileOutputStream;
 
 public class PageConsultMoto extends JFrame implements ActionListener {
+
+
     private JPanel panQuestion = new JPanel();
     private JPanel panSlogan = new JPanel();
     private JPanel panTxtMarque = new JPanel();
@@ -68,6 +70,13 @@ public class PageConsultMoto extends JFrame implements ActionListener {
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
         question.setFont(new Font("Arial", Font.PLAIN, 16));
+
+        buttonGroup.add(dispo);
+        buttonGroup.add(indispo);
+        panInfoDispo.setLayout(new BoxLayout(panInfoDispo, BoxLayout.LINE_AXIS));
+        panInfoDispo.add(dispo);
+        panInfoDispo.add(indispo);
+        panInfoDispo.setBackground(Color.white);
 
         marque.setPreferredSize(new Dimension(150,30));
         modele.setPreferredSize(new Dimension(150,30));
