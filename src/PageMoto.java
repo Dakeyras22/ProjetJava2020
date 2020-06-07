@@ -238,6 +238,19 @@ public class PageMoto extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource() == modif){
+            laMoto = ficheInit(listeMoto.getSelectedItem().toString());
+            PageConsultMoto pageConsultMoto = new PageConsultMoto(laMoto);
+            this.setVisible(false);
+        }
+
+        if(e.getSource() == suppr){
+            File file = new File("./Motos/"+ (listeMoto.getSelectedItem().toString()) +".xml");
+            file.delete();
+            this.dispose();
+            PageMoto pageMoto = new PageMoto();
+        }
+
         if(e.getSource() == listeMoto){
             laMoto = ficheInit(listeMoto.getSelectedItem().toString());
             marque.setText(laMoto.getMarque());

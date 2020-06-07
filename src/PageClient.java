@@ -203,6 +203,7 @@ public class PageClient extends JFrame implements ActionListener {
 
         this.setBounds(500, 100, 900, 500);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         this.setTitle("Page Client");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
@@ -219,6 +220,19 @@ public class PageClient extends JFrame implements ActionListener {
 
         if(e.getSource() == ajout){
             PageAjoutClient pageAjoutClient = new PageAjoutClient();
+            this.setVisible(false);
+        }
+
+        if(e.getSource() == suppr){
+            File file = new File("./Client/"+ (listeClients.getSelectedItem().toString()) +".xml");
+            file.delete();
+            this.dispose();
+            PageClient pageClient = new PageClient();
+        }
+
+        if (e.getSource() == modif){
+            leGars = ficheInit(listeClients.getSelectedItem().toString());
+            PageConsultClient pageConsult = new PageConsultClient(leGars);
             this.setVisible(false);
         }
 

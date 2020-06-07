@@ -172,7 +172,7 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ajoutMoto();
-                PageAccueil pageAccueil = new PageAccueil();
+                PageMoto pageMoto = new PageMoto();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {

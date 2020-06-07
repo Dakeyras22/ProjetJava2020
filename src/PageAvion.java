@@ -243,6 +243,13 @@ public class PageAvion extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource() == suppr){
+            File file = new File("./Motos/"+ (listeAvion.getSelectedItem().toString()) +".xml");
+            file.delete();
+            this.dispose();
+            PageAvion pageAvion = new PageAvion();
+        }
+
         if (e.getSource() == listeAvion){
             avion = ficheInit(listeAvion.getSelectedItem().toString());
             marque.setText(avion.getMarque());

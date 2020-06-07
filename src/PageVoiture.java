@@ -244,6 +244,20 @@ public class PageVoiture extends JFrame implements ActionListener {
             this.setVisible(false);
         }
 
+        if(e.getSource()== suppr){
+            File file = new File("./Voitures/"+ (listeVoiture.getSelectedItem().toString()) +".xml");
+            file.delete();
+            this.dispose();
+            PageVoiture pageVoiture = new PageVoiture();
+        }
+
+        if(e.getSource() == modif){
+            laVoiture = ficheInit(listeVoiture.getSelectedItem().toString());
+            PageConsultVoiture pageConsultVoiture = new PageConsultVoiture(laVoiture);
+            this.setVisible(false);
+
+        }
+
         if(e.getSource() == ajout){
             PageAjoutVoiture pageAjoutVoiture = new PageAjoutVoiture();
             this.setVisible(false);

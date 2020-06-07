@@ -184,7 +184,7 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ajoutVoiture();
-                PageAccueil pageAccueil = new PageAccueil();
+                PageVoiture pageVoiture = new PageVoiture();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {

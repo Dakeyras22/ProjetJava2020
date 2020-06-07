@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.FileOutputStream;
 
 public class PageConsultClient extends JFrame implements ActionListener {
     private JPanel panQuestion = new JPanel();
@@ -155,7 +157,7 @@ public class PageConsultClient extends JFrame implements ActionListener {
             } else {
                 ajoutClient(nom.getText(), prenom.getText(),dateNaissance.getText(),adresse.getText(),
                         telephone.getText(), mail.getText());
-                PageAccueil pageAccueil = new PageAccueil();
+                PageClient pageClient = new PageClient();
                 this.dispose();
             }
         } else if (e.getSource() == retour) {
@@ -167,5 +169,22 @@ public class PageConsultClient extends JFrame implements ActionListener {
     public void ajoutClient(String nom, String prenom, String dateNaissance, String adresse, String telephone,
                             String mail){
         Client aClient = new Client(nom,prenom,dateNaissance,adresse,telephone,mail);
+        ecrireClient(aClient);
+    }
+
+    //=================================================================================//
+
+    public void ecrireClient(Client aClient) {
+
+        try {
+            FileOutputStream mec = new FileOutputStream("./Client/"+aClient.getNom()+" "+aClient.getPrenom()+".xml");
+            XMLEncoder encoder = new XMLEncoder(mec);
+            encoder.writeObject(aClient);
+            encoder.close();
+            mec.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
