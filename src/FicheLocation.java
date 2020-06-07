@@ -6,9 +6,11 @@ public class FicheLocation {
     private String dateFin;
     private int nbJours;
     private int kmPrevu;
-    private int prixPrev;
+    private double prixPrevu;
+    private int kmFinal;
+    private double prixFinal;
 
-    public FicheLocation(Client aClient, Vehicules aVehicule, String dateDebut, String dateFin,int nbJours, int kmPrevu){
+    public FicheLocation(Client aClient, Vehicules aVehicule, String dateDebut, String dateFin,int nbJours, int kmPrevu, double prixPrevu){
 
         this.aClient = aClient;
         this.aVehicule = aVehicule;
@@ -16,7 +18,9 @@ public class FicheLocation {
         this.dateFin = dateFin;
         this.nbJours = nbJours;
         this.kmPrevu = kmPrevu;
-        this.prixPrev = 0;
+        this.prixPrevu = prixPrevu;
+        this.kmFinal = 0;
+        this.prixFinal = 0;
 
 
     }
@@ -47,9 +51,11 @@ public class FicheLocation {
         return kmPrevu;
     }
 
-    public int getPrixPrev() {
-        return prixPrev;
-    }
+    public double getPrixPrevu() { return prixPrevu; }
+
+    public int getKmFinal() { return kmFinal; }
+
+    public double getPrixFinal() { return prixFinal; }
 
     /*======================================== Setters ===================================*/
 
@@ -77,9 +83,13 @@ public class FicheLocation {
         this.kmPrevu = kmPrevu;
     }
 
-    public void setPrixPrev(int prixPrev) {
-        this.prixPrev = prixPrev;
+    public void setPrixPrevu(double prixPrevu) {
+        this.prixPrevu = prixPrevu;
     }
+
+    public void setKmFinal(int kmFinal) { this.kmFinal = kmFinal; }
+
+    public void setPrixFinal(double prixFinal) { this.prixFinal = prixFinal; }
 
     /* ========================================= Méthodes ===============================*/
 
