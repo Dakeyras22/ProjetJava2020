@@ -80,11 +80,11 @@ public class PageChoixVehiculeFiche extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == voiture){
-            new PageVoiture();
+            new PageLocationVoiture();
         }else if(e.getSource() == moto){
-            new PageMoto();
+            new PageLocationMoto();
         }else if(e.getSource() == avion){
-            new PageAvion();
+            new PageLocationAvion();
         }
         this.dispose();
     }
