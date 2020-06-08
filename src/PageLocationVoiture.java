@@ -27,6 +27,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
     private JPanel panelRetour;
     private JPanel panelAjout;
     private JPanel panelConsult;
+    private JPanel panelRendu;
 
     private JPanel panelNom;
     private JPanel panelPrenom;
@@ -64,14 +65,20 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
     private JButton retour;
     private JButton ajout;
     private JButton consult;
+    private JButton rendu;
 
     private Client leGars;
     private Voiture laVoiture = new Voiture();
+    private FicheLocation laFiche;
 
     private ArrayList<String> tabClients = new ArrayList<>();
     private ArrayList<String> tabVoitures = new ArrayList<>();
     private ArrayList<String> tabLocations = new ArrayList<>();
 
+
+    /**
+     * Constructeur de la classe PageLocationVoiture générant l'affichage de la fenêtre
+     */
 
     public PageLocationVoiture(){
 
@@ -79,7 +86,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         BorderLayout borderFicheBoutons = new BorderLayout();
         GridLayout grilleListes = new GridLayout(3,1);
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
-        GridLayout grilleBoutons = new GridLayout(3,1);
+        GridLayout grilleBoutons = new GridLayout(4,1);
         BorderLayout borderFiche = new BorderLayout();
         GridLayout grilleInfoClient = new GridLayout(6,1);
         GridLayout grilleInfoVoiture = new GridLayout(8,1);
@@ -87,6 +94,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         retour = new JButton("Retour");
         ajout = new JButton("Ajouter Fiche");
         consult = new JButton("Consulter fiches");
+        rendu = new JButton("Fiche de Rendu");
 
         listeClients = new JComboBox();
         listeFiches = new JComboBox();
@@ -100,6 +108,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         panelFiche = new JPanel();
         panelBoutons = new JPanel();
         panelRetour = new JPanel();
+        panelRendu = new JPanel();
         panelAjout = new JPanel();
         panelConsult = new JPanel();
         panelInfoClient = new JPanel();
@@ -129,6 +138,11 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         ajoutListeVoiture();
         if(!tabVoitures.isEmpty()){
             comboBoxVoitureInit();
+        }
+
+        ajoutListeLocation();
+        if(!tabLocations.isEmpty()){
+            comboBoxLocationInit();
         }
 
         if(listeClients.getSelectedItem() != null) {
@@ -203,11 +217,13 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         panelBoutons.setLayout(grilleBoutons);
         panelBoutons.add(panelAjout);
         panelBoutons.add(panelConsult);
+        panelBoutons.add(panelRendu);
         panelBoutons.add(panelRetour);
 
         panelAjout.add(ajout);
         panelConsult.add(consult);
         panelRetour.add(retour);
+        panelRendu.add(rendu);
 
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
@@ -235,6 +251,7 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         retour.addActionListener(this);
         ajout.addActionListener(this);
         consult.addActionListener(this);
+        rendu.addActionListener(this);
         listeVoiture.addActionListener(this);
         listeClients.addActionListener(this);
 
@@ -258,13 +275,25 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         }
 
         if(e.getSource() == ajout){
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            laVoiture = ficheInitVoiture(listeVoiture.getSelectedItem().toString());
+            PageAjoutFiche pageAjoutFiche = new PageAjoutFiche(leGars,laVoiture);
+            this.dispose();
+        }
 
+        if(e.getSource()== rendu){
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            laVoiture = ficheInitVoiture(listeVoiture.getSelectedItem().toString());
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageRenduFiche pageRenduFiche = new PageRenduFiche(listeClients.getSelectedItem().toString(),listeVoiture.getSelectedItem().toString(),laFiche,leGars,laVoiture);
+            this.dispose();
         }
 
         if (e.getSource() == consult){
             leGars = ficheInitClient(listeClients.getSelectedItem().toString());
             laVoiture = ficheInitVoiture(listeVoiture.getSelectedItem().toString());
-            PageConsultClient pageConsult = new PageConsultClient(leGars);
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageConsultFiche pageConsult = new PageConsultFiche(listeClients.getSelectedItem().toString(),listeVoiture.getSelectedItem().toString(),laFiche,leGars,laVoiture);
             this.setVisible(false);
         }
 
@@ -296,6 +325,13 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Méthode générant un objet Client à partir d'un fichier .xml
+     *
+     * @param client
+     * @return
+     */
+
     public Client ficheInitClient(String client) {
 
         Client mec = null;
@@ -314,12 +350,18 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         return mec;
     }
 
+    /**
+     * Méthode générant un objet FicheLocation à partir d'un fichier .xml
+     *
+     * @param location
+     * @return
+     */
 
     public FicheLocation ficheInitLocation(String location) {
 
         FicheLocation fiche = null;
         try {
-            FileInputStream fichier = new FileInputStream("./Client/" + location + ".xml");
+            FileInputStream fichier = new FileInputStream("./Location/" + location + ".xml");
             XMLDecoder decoder = new XMLDecoder(fichier);
             fiche = (FicheLocation) decoder.readObject();
             decoder.close();
@@ -333,7 +375,12 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         return fiche;
     }
 
-
+    /**
+     * Méthode générant un objet Voiture à partir d'un fichier .xml
+     *
+     * @param voiture
+     * @return
+     */
 
     public Voiture ficheInitVoiture(String voiture) {
 
@@ -353,7 +400,10 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         return car;
     }
 
-    // ============================================================
+    /**
+     * Méthode ajoutant à une liste les fiches de Voiture
+     */
+
     public void ajoutListeVoiture(){
 
         FilenameFilter filtre = new FilenameFilter() {
@@ -381,7 +431,10 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
     }
 
-    // ============================================================
+    /**
+     * Méthode ajoutant à une liste les fiches de Client
+     */
+
     public void ajoutListeClient(){
 
         FilenameFilter filtre = new FilenameFilter() {
@@ -409,7 +462,9 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
 
     }
 
-    // ===================================================================
+    /**
+     * Méthode ajoutant à une liste les fiches de location
+     */
 
     public void ajoutListeLocation(){
 
@@ -430,21 +485,25 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
             String[] tab = fichiersVoitures[i].toString().split("/");
             String[] nomFichier = tab[2].split(".xml");
             String[] nomFichierh = nomFichier[0].split(" ");
-            String modele = nomFichierh[1];
+            String modele = nomFichierh[3];
+            String marque = nomFichierh[2];
+            String prenom = nomFichierh[1];
             String nom = nomFichierh[0];
-            String location = nom + " " + modele;
-            Client aClient = ficheInitLocation(location).getaClient();
-            Vehicules aVehicule = ficheInitLocation(location).getaVehicule();
+            String location = nom + " " + prenom + " " + marque + " " + modele;
+            String aClient = ficheInitLocation(location).getaClient();
+            String aVehicule = ficheInitLocation(location).getaVehicule();
 
-            if(aClient == listeClients.getSelectedItem() && aVehicule == listeVoiture.getSelectedItem()) {
+            if((nom + " "+ prenom).equals(listeClients.getSelectedItem().toString()) && (marque+" "+modele).equals(listeVoiture.getSelectedItem().toString())) {
+
                 tabLocations.add(location);
             }
         }
 
     }
 
-    // =============================================================================
-
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Clients
+     */
 
     private void comboBoxClientInit() {
         listeClients.removeAllItems();
@@ -455,12 +514,27 @@ public class PageLocationVoiture extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Voitures
+     */
 
     private void comboBoxVoitureInit() {
         listeVoiture.removeAllItems();
         for (String c : tabVoitures) {
 
             listeVoiture.addItem(c);
+        }
+    }
+
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Locations
+     */
+
+    private void comboBoxLocationInit() {
+        listeFiches.removeAllItems();
+        for (String c : tabLocations) {
+
+            listeFiches.addItem(c);
         }
     }
 

@@ -59,6 +59,9 @@ public class PageAvion extends JFrame implements ActionListener {
 
     private ArrayList<String> tabAvion = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe PageAvion générant l'affichage de la fenêtre
+     */
 
     public PageAvion(){
 
@@ -263,6 +266,13 @@ public class PageAvion extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Méthode recueillant les informations d'un fichier .xml afin de générer un objet de la classe Avion
+     *
+     * @param avion
+     * @return
+     */
+
     public Avion ficheInit(String avion) {
 
         Avion plane = null;
@@ -281,7 +291,9 @@ public class PageAvion extends JFrame implements ActionListener {
         return plane;
     }
 
-// ============================================================
+    /**
+     * Méthode créant la liste des Avions en fonction des fichiers .xml
+     */
 
     public void ajoutListeAvion(){
 
@@ -313,7 +325,7 @@ public class PageAvion extends JFrame implements ActionListener {
     // ==========================================================================
 
     /**
-     * Cette fonction permet de remplir la ComboBox des voitures
+     * Cette fonction permet de remplir la ComboBox des avions
      */
 
     private void comboBoxInit() {

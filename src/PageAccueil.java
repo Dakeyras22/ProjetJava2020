@@ -19,6 +19,10 @@ public class PageAccueil extends JFrame implements ActionListener{
     private JLabel slogan = new JLabel("Nous redoublons d'effort pour vous proposer un service de qualité.");
     private JLabel bienvenue = new JLabel("Bienvenue chez : Plantet-Maubon Concession");
 
+    /**
+     * Constructeur classe PageAccueil générant l'affichage de la fenêtre
+     */
+
     public PageAccueil(){
 
         /*choix des polices d'écriture*/

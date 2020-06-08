@@ -3,6 +3,10 @@ public class Avion extends Vehicules{
     private int nbHeureVol;
     private int nbMoteur;
 
+    /**
+     * Constructeur de la classe avion, avec en paramètre les informations utiles pour l'utilisateur.
+     */
+
     public Avion(){
         super();
         this.nbHeureVol = 0;

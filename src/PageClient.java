@@ -56,6 +56,9 @@ public class PageClient extends JFrame implements ActionListener {
 
     private ArrayList<String> tabClients = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe PageClient générant l'affichage de la fenêtre
+     */
 
     public PageClient(){
 
@@ -250,6 +253,13 @@ public class PageClient extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Méthode recueillant les informations d'un fichier .xml pour créer un objet de la classe Client
+     *
+     * @param client
+     * @return
+     */
+
     public Client ficheInit(String client) {
 
         Client mec = null;
@@ -268,7 +278,10 @@ public class PageClient extends JFrame implements ActionListener {
         return mec;
     }
 
-    // ============================================================
+    /**
+     * Méthode créant la liste des clients en fonction des fichiers .xml
+     */
+
     public void ajoutListeClient(){
 
         FilenameFilter filtre = new FilenameFilter() {
@@ -299,7 +312,7 @@ public class PageClient extends JFrame implements ActionListener {
     // ==========================================================================
 
     /**
-     * Cette fonction permet de remplir la ComboBox des voitures
+     * Cette fonction permet de remplir la ComboBox des clients
      */
 
     private void comboBoxInit() {

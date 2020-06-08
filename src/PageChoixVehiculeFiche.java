@@ -21,6 +21,10 @@ public class PageChoixVehiculeFiche extends JFrame implements ActionListener{
     private JButton avion = new JButton("Avions");
     private JLabel question = new JLabel("De quel type de véhicule souhaitez vous avoir les fiches ?");
 
+    /**
+     * Constructeur de la classe PageChoixVehiculeFiche générant l'affichage de la fenêtre
+     */
+
     public PageChoixVehiculeFiche(){
 
         question.setFont(new Font("Arial", Font.PLAIN, 16));

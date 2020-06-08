@@ -50,6 +50,12 @@ public class PageConsultAvion extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageConsultAvion générant l'affichage de la fenêtre
+     *
+     * @param anAvion
+     */
+
     public PageConsultAvion(Avion anAvion){
 
         marque.setText(anAvion.getMarque());
@@ -193,6 +199,10 @@ public class PageConsultAvion extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode modifiant un objet Avion
+     */
+
     public void ModifAvion(){
         Avion anAvion = new Avion();
         anAvion.setMarque(marque.getText());
@@ -206,6 +216,12 @@ public class PageConsultAvion extends JFrame implements ActionListener{
         ecrireAvion(anAvion);
 
     }
+
+    /**
+     * Méthode créant
+     *
+     * @param anAvion
+     */
 
     public void ecrireAvion(Avion anAvion) {
 

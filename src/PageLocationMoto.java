@@ -27,6 +27,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
     private JPanel panelRetour;
     private JPanel panelAjout;
     private JPanel panelConsult;
+    private JPanel panelRendu;
 
     private JPanel panelNom;
     private JPanel panelPrenom;
@@ -64,13 +65,19 @@ public class PageLocationMoto extends JFrame implements ActionListener{
     private JButton retour;
     private JButton ajout;
     private JButton consult;
+    private JButton rendu;
 
     private Client leGars;
     private Moto laMoto;
+    private FicheLocation laFiche;
 
     private ArrayList<String> tabClients = new ArrayList<>();
     private ArrayList<String> tabMotos = new ArrayList<>();
+    private ArrayList<String> tabLocations = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe PageLocationMoto générant l'affichage de la fenêtre
+     */
 
     public PageLocationMoto(){
 
@@ -78,7 +85,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         BorderLayout borderFicheBoutons = new BorderLayout();
         GridLayout grilleListes = new GridLayout(3,1);
         GridLayout grilleFicheBoutons = new GridLayout(1,2);
-        GridLayout grilleBoutons = new GridLayout(3,1);
+        GridLayout grilleBoutons = new GridLayout(4,1);
         BorderLayout borderFiche = new BorderLayout();
         GridLayout grilleInfoClient = new GridLayout(6,1);
         GridLayout grilleInfoMoto = new GridLayout(7,1);
@@ -86,6 +93,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         retour = new JButton("Retour");
         ajout = new JButton("Ajouter Fiche");
         consult = new JButton("Consulter fiches");
+        rendu = new JButton("Fiche de Rendu");
 
         listeClients = new JComboBox();
         listeFiches = new JComboBox();
@@ -100,6 +108,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         panelBoutons = new JPanel();
         panelRetour = new JPanel();
         panelAjout = new JPanel();
+        panelRendu = new JPanel();
         panelConsult = new JPanel();
         panelInfoClient = new JPanel();
         panelInfoMoto = new JPanel();
@@ -128,6 +137,11 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         ajoutListeMoto();
         if(!tabMotos.isEmpty()){
             comboBoxMotoInit();
+        }
+
+        ajoutListeLocation();
+        if(!tabLocations.isEmpty()){
+            comboBoxLocationInit();
         }
 
         if(listeClients.getSelectedItem() != null) {
@@ -199,11 +213,15 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         panelBoutons.setLayout(grilleBoutons);
         panelBoutons.add(panelAjout);
         panelBoutons.add(panelConsult);
+        panelBoutons.add(panelRendu);
+
         panelBoutons.add(panelRetour);
+
 
         panelAjout.add(ajout);
         panelConsult.add(consult);
         panelRetour.add(retour);
+        panelRendu.add(rendu);
 
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
@@ -230,6 +248,7 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
         retour.addActionListener(this);
         ajout.addActionListener(this);
+        rendu.addActionListener(this);
         consult.addActionListener(this);
         listeMoto.addActionListener(this);
         listeClients.addActionListener(this);
@@ -254,13 +273,26 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         }
 
         if(e.getSource() == ajout){
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            laMoto = ficheInitMoto(listeMoto.getSelectedItem().toString());
+            PageAjoutFiche pageAjoutFiche = new PageAjoutFiche(leGars,laMoto);
+            this.dispose();
+        }
 
+        if(e.getSource()== rendu){
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            laMoto = ficheInitMoto(listeMoto.getSelectedItem().toString());
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageRenduFiche pageRenduFiche = new PageRenduFiche(listeClients.getSelectedItem().toString(),listeMoto.getSelectedItem().toString(),laFiche,leGars,laMoto);
+            this.dispose();
         }
 
         if (e.getSource() == consult){
+
             leGars = ficheInitClient(listeClients.getSelectedItem().toString());
             laMoto = ficheInitMoto(listeMoto.getSelectedItem().toString());
-            PageConsultClient pageConsult = new PageConsultClient(leGars);
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageConsultFiche pageConsult = new PageConsultFiche(listeClients.getSelectedItem().toString(),listeMoto.getSelectedItem().toString(),laFiche,leGars,laMoto);
             this.setVisible(false);
         }
 
@@ -291,6 +323,13 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Méthode générant un objet FicheLocation à partir d'un fichier .xml
+     *
+     * @param client
+     * @return
+     */
+
     public Client ficheInitClient(String client) {
 
         Client mec = null;
@@ -309,7 +348,12 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         return mec;
     }
 
-
+    /**
+     * Méthode générant un objet Moto à partir d'un fichier .xml
+     *
+     * @param moto
+     * @return
+     */
 
     public Moto ficheInitMoto(String moto) {
 
@@ -329,7 +373,35 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         return motorbike;
     }
 
-    // ============================================================
+    /**
+     * Méthode générant un objet FicheLocation à partir d'un fichier .xml
+     *
+     * @param location
+     * @return
+     */
+
+    public FicheLocation ficheInitLocation(String location) {
+
+        FicheLocation fiche = null;
+        try {
+            FileInputStream fichier = new FileInputStream("./Location/" + location + ".xml");
+            XMLDecoder decoder = new XMLDecoder(fichier);
+            fiche = (FicheLocation) decoder.readObject();
+            decoder.close();
+            fichier.close();
+
+        }
+
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return fiche;
+    }
+
+
+    /**
+     * Méthode ajoutant à une liste les différentes Motos
+     */
 
     public void ajoutListeMoto(){
 
@@ -358,7 +430,10 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
     }
 
-    // ============================================================
+    /**
+     * Méthode ajoutant à une liste les différents clients
+     */
+
     public void ajoutListeClient(){
 
         FilenameFilter filtre = new FilenameFilter() {
@@ -386,6 +461,48 @@ public class PageLocationMoto extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Méthode ajoutant à une liste les fiches de location
+     */
+
+    public void ajoutListeLocation(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        new File("./Location").mkdir();
+
+        File dossier = new File("./Location/");
+        File[] fichiersVoitures = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersVoitures.length; i++) {
+
+            String[] tab = fichiersVoitures[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String modele = nomFichierh[3];
+            String marque = nomFichierh[2];
+            String prenom = nomFichierh[1];
+            String nom = nomFichierh[0];
+            String location = nom + " " + prenom + " " + marque + " " + modele;
+            System.out.println(location);
+
+
+            if((nom + " "+ prenom).equals(listeClients.getSelectedItem().toString()) && (marque+" "+modele).equals(listeMoto.getSelectedItem().toString())) {
+
+                tabLocations.add(location);
+            }
+        }
+
+    }
+
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Clients
+     */
 
     private void comboBoxClientInit() {
         listeClients.removeAllItems();
@@ -396,12 +513,27 @@ public class PageLocationMoto extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Motos
+     */
 
     private void comboBoxMotoInit() {
         listeMoto.removeAllItems();
         for (String c : tabMotos) {
 
             listeMoto.addItem(c);
+        }
+    }
+
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Locations
+     */
+
+    private void comboBoxLocationInit() {
+        listeFiches.removeAllItems();
+        for (String c : tabLocations) {
+
+            listeFiches.addItem(c);
         }
     }
 

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<java version="12.0.1" class="java.beans.XMLDecoder">
+<java version="12.0.2" class="java.beans.XMLDecoder">
  <object class="Voiture">
+  <void property="disponible">
+   <boolean>false</boolean>
+  </void>
   <void property="marque">
    <string>Peugeot</string>
   </void>

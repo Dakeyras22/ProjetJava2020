@@ -6,6 +6,10 @@ public class Vehicules {
     private int prixLocation;
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe Vehicules définissant un véhicule
+     */
+
     public Vehicules(){
         this.etat = "neuf";
         this.modele = "non renseigné";

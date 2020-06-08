@@ -52,6 +52,12 @@ public class PageConsultMoto extends JFrame implements ActionListener {
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageConsultMoto générant l'affichage de la fenêtre
+     *
+     * @param aMoto
+     */
+
     public PageConsultMoto(Moto aMoto){
 
         marque.setText(aMoto.getMarque());
@@ -198,6 +204,10 @@ public class PageConsultMoto extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Méthode générant une Moto en fonction des informations modifiées
+     */
+
     public void ModifMoto(){
         Moto aMoto = new Moto();
         aMoto.setMarque(marque.getText());
@@ -210,6 +220,12 @@ public class PageConsultMoto extends JFrame implements ActionListener {
         aMoto.setDisponible(disponible);
         ecrireMoto(aMoto);
     }
+
+    /**
+     * Méthode transformant un objet Moto en fichier .xml
+     *
+     * @param aMoto
+     */
 
     public void ecrireMoto(Moto aMoto) {
 

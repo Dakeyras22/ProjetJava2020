@@ -39,6 +39,12 @@ public class PageConsultClient extends JFrame implements ActionListener {
     private JButton ajout = new JButton("Terminer les modifications");
     private JButton retour = new JButton("Retour");
 
+    /**
+     * Constructeur de la classe PageConsultClient générant l'affichage de la fenêtre
+     *
+     * @param aClient
+     */
+
     public PageConsultClient(Client aClient){
 
         nom.setText(aClient.getNom());
@@ -166,13 +172,28 @@ public class PageConsultClient extends JFrame implements ActionListener {
         this.dispose();
     }
 
+    /**
+     * Méthode créant un client en fonction des informations modifiées
+     *
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param adresse
+     * @param telephone
+     * @param mail
+     */
+
     public void ajoutClient(String nom, String prenom, String dateNaissance, String adresse, String telephone,
                             String mail){
         Client aClient = new Client(nom,prenom,dateNaissance,adresse,telephone,mail);
         ecrireClient(aClient);
     }
 
-    //=================================================================================//
+    /**
+     * Méthode transformant un objet Client en fichier .xml
+     *
+     * @param aClient
+     */
 
     public void ecrireClient(Client aClient) {
 

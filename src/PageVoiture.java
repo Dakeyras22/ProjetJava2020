@@ -62,9 +62,9 @@ public class PageVoiture extends JFrame implements ActionListener {
 
     private ArrayList<String> tabVoiture = new ArrayList<String>();
 
-
-
-
+    /**
+     * Constructeur de la classe PageVoiture générant l'affichage de la fenêtre
+     */
 
     public PageVoiture(){
 
@@ -280,6 +280,13 @@ public class PageVoiture extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * Méthode créant une Voiture à partir d'un fichier .xml
+     *
+     * @param voiture
+     * @return
+     */
+
     public Voiture ficheInit(String voiture) {
 
         Voiture car = null;
@@ -298,8 +305,10 @@ public class PageVoiture extends JFrame implements ActionListener {
         return car;
     }
 
+    /**
+     * Méthode ajoutant à une liste les fiches de Voiture
+     */
 
-// ============================================================
     public void ajoutListeVoiture(){
 
         FilenameFilter filtre = new FilenameFilter() {

@@ -3,6 +3,10 @@ public class VehiculesTerrestre extends Vehicules {
     private int km;
     private int puissance;
 
+    /**
+     * Constructeur de la classe VehiculesTerrestre définissant un véhicule terrestre
+     */
+
     public VehiculesTerrestre(){
         super();
         this.km = 0;

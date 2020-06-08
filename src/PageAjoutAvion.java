@@ -55,6 +55,10 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageAjoutAvion générant l'affichage de la fenêtre
+     */
+
     public PageAjoutAvion(){
 
         /*choix des polices d'écriture*/
@@ -194,9 +198,10 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         this.dispose(); //ferme la fenetre actuelle
     }
 
-    /* =================================================================================================*/
-    /* ================crée un avion en utilisant les informations des JTextfields======================*/
-    /* =================================================================================================*/
+    /**
+     * Méthode créant un avion en utilisant les informations des JTextfields
+     */
+
     public void ajoutAvion(){
         Avion aAvion = new Avion();
         aAvion.setMarque(marque.getText());
@@ -211,9 +216,11 @@ public class PageAjoutAvion extends JFrame implements ActionListener{
         ecrireAvion(aAvion); //lance la fonction ecrireAvion
     }
 
-    /* =================================================================================================*/
-    /* ==========================Sérialisation d'un avion passé en argument=============================*/
-    /* =================================================================================================*/
+    /**
+     * Méthode transformant un objet Avion en fichier .xml
+     *
+     * @param anAvion
+     */
     public void ecrireAvion(Avion anAvion) {
 
         try {

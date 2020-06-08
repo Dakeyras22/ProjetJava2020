@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.FileOutputStream;
 
 public class PageConsultFiche extends JFrame implements ActionListener {
     private JPanel panQuestion = new JPanel();
@@ -34,13 +36,38 @@ public class PageConsultFiche extends JFrame implements ActionListener {
     private JButton retour = new JButton("Retour");
     private FicheLocation ficheLocation;
     private Vehicules vehicule;
+    private String vehiculeNom;
     private Client client;
+    private String clientNom;
+    private String sClient;
+    private String sVehicule;
     private boolean rendu = true;
 
-    public void PageConsultFiche(FicheLocation aFicheLocation){
-        ficheLocation = aFicheLocation;
-        vehicule = ficheLocation.getaVehicule();
-        client = ficheLocation.getaClient();
+    /**
+     * Constructeur de la classe PageConsultFiche générant l'affichage de la fenêtre
+     *
+     * @param client
+     * @param vehicule
+     * @param ficheLocation
+     * @param aClient
+     * @param aVehicule
+     */
+
+    public PageConsultFiche(String client,String vehicule,FicheLocation ficheLocation,Client aClient, Vehicules aVehicule) {
+
+        this.vehiculeNom = vehicule;
+        this.clientNom = client;
+        this.ficheLocation = ficheLocation;
+
+        this.vehicule = aVehicule;
+        this.client = aClient;
+
+
+
+        dateDebut.setText(ficheLocation.getDateDebut());
+        dateFin.setText(ficheLocation.getDateFin());
+        nbJours.setText(String.valueOf(ficheLocation.getNbJours()));
+
 
         if(ficheLocation.getPrixFinal()==0){
             rendu = false;
@@ -54,8 +81,8 @@ public class PageConsultFiche extends JFrame implements ActionListener {
         }else{
             txtNbKmPrevu.setText("Nombre de km prévu :");
             txtPrix.setText("Prix prévu :");
-            nbKmPrevu.setText(String.valueOf(ficheLocation.getKmFinal()));
-            prix.setText(String.valueOf(ficheLocation.getPrixFinal()));
+            nbKmPrevu.setText(String.valueOf(ficheLocation.getKmPrevu()));
+            prix.setText(String.valueOf(ficheLocation.getPrixPrevu()));
         }
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
@@ -146,7 +173,7 @@ public class PageConsultFiche extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==retour){
-            //PageFiche pageFiche = new PageFiche();
+            PageAccueil pageAccueil = new PageAccueil();
             this.dispose();
         }else if(e.getSource()==ajout){
             if (dateDebut.getText().equals("") || dateFin.getText().equals("") || nbJours.getText().equals("")
@@ -158,6 +185,15 @@ public class PageConsultFiche extends JFrame implements ActionListener {
             }
         }
     }
+
+    /**
+     * Méthode modifiant une fiche de location en fonction des informations modifiées
+     *
+     * @param dateDebut
+     * @param dateFin
+     * @param nbJours
+     * @param nbKmPrevu
+     */
 
     public void ajoutFiche(String dateDebut, String dateFin, String nbJours, String nbKmPrevu) {
         double prixPrevu = 0;
@@ -180,10 +216,34 @@ public class PageConsultFiche extends JFrame implements ActionListener {
         }else{
             reduc = false;
         }
-        FicheLocation ficheLocation = new FicheLocation(client, vehicule, dateDebut, dateFin, Integer.parseInt(nbJours),
+        FicheLocation ficheLocation = new FicheLocation(clientNom, vehiculeNom, dateDebut, dateFin, Integer.parseInt(nbJours),
                 Integer.parseInt(nbKmPrevu), prixPrevu);
+
+        ecrireLocation(ficheLocation);
         new PrixPopUp(prixPrevu, reduc, ficheLocation, rendu);
         vehicule.setDisponible(false);
     }
+
+    /**
+     * Méthode transformant un objet FicheLocation en fichier .xml
+     *
+     * @param aLoc
+     */
+
+    public void ecrireLocation(FicheLocation aLoc) {
+
+        try {
+            FileOutputStream fiche = new FileOutputStream("./Location/"+clientNom+" "+vehiculeNom+".xml");
+            XMLEncoder encoder = new XMLEncoder(fiche);
+            encoder.writeObject(aLoc);
+            encoder.close();
+            fiche.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+
 
 }

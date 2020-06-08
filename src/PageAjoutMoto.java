@@ -51,6 +51,10 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageAjoutMoto générant l'affichage de la fenêtre
+     */
+
     public PageAjoutMoto(){
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
@@ -186,6 +190,10 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode générant un objet Moto en fonction des informations récupérées
+     */
+
     public void ajoutMoto(){
         Moto aMoto = new Moto();
         aMoto.setMarque(marque.getText());
@@ -200,6 +208,12 @@ public class PageAjoutMoto extends JFrame implements ActionListener{
         ecrireMoto(aMoto);
 
     }
+
+    /**
+     * Méthode transformant un objet Moto en fichier .xml
+     *
+     * @param aMoto
+     */
 
     public void ecrireMoto(Moto aMoto) {
 

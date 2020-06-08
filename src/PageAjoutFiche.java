@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.XMLEncoder;
+import java.io.FileOutputStream;
 
 public class PageAjoutFiche extends JFrame implements ActionListener {
     private JPanel panQuestion = new JPanel();
@@ -28,12 +30,24 @@ public class PageAjoutFiche extends JFrame implements ActionListener {
     private JTextField nbKmPrevu = new JTextField();
     private JButton ajout = new JButton("Ajouter");
     private JButton retour = new JButton("Retour");
+    private String Sclient;
+    private String Svehicule;
     private Client client;
     private Vehicules vehicule;
+
+    /**
+     * Constructeur de la classe PageAjoutFiche générant l'affichage de la fenêtre
+     *
+     * @param aClient
+     * @param aVehicule
+     */
 
     public PageAjoutFiche(Client aClient, Vehicules aVehicule){
         client = aClient;
         vehicule = aVehicule;
+
+        Sclient = aClient.getNom() + " " + aClient.getPrenom();
+        Svehicule = aVehicule.getMarque() + " "+aVehicule.getModele();
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
         slogan.setForeground(Color.orange);
@@ -123,7 +137,7 @@ public class PageAjoutFiche extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==retour){
-            //PageFiche pageFiche = new PageFiche();
+            PageAccueil pageAccueil = new PageAccueil();
             this.dispose();
         }else if(e.getSource()==ajout){
             if (dateDebut.getText().equals("") || dateFin.getText().equals("") || nbJours.getText().equals("")
@@ -131,10 +145,20 @@ public class PageAjoutFiche extends JFrame implements ActionListener {
                 BlankPopUp blankPopUp = new BlankPopUp();
             } else {
                 ajoutFiche(dateDebut.getText(), dateFin.getText(),nbJours.getText(), nbKmPrevu.getText());
+                PageAccueil pageAccueil = new PageAccueil();
                 this.dispose();
             }
         }
     }
+
+    /**
+     * Méthode générant une fiche de location et calculant le prix en fonction des informations transmises
+     *
+     * @param dateDebut
+     * @param dateFin
+     * @param nbJours
+     * @param nbKmPrevu
+     */
 
     public void ajoutFiche(String dateDebut, String dateFin, String nbJours, String nbKmPrevu) {
         double prixPrevu = 0;
@@ -157,10 +181,33 @@ public class PageAjoutFiche extends JFrame implements ActionListener {
         }else{
             reduc = false;
         }
-        FicheLocation ficheLocation = new FicheLocation(client, vehicule, dateDebut, dateFin, Integer.parseInt(nbJours),
+        FicheLocation ficheLocation = new FicheLocation(Sclient, Svehicule, dateDebut, dateFin, Integer.parseInt(nbJours),
                 Integer.parseInt(nbKmPrevu), prixPrevu);
+
+        ecrireLocation(ficheLocation);
+
         PrixPopUp prixPrevuPopUp = new PrixPopUp(prixPrevu, reduc, ficheLocation, false);
         vehicule.setDisponible(false);
+    }
+
+    /**
+     * Méthode transformant un objet FicheLocation en fichier .xml
+     *
+     * @param aLoc
+     */
+
+    public void ecrireLocation(FicheLocation aLoc) {
+
+        try {
+            FileOutputStream fiche = new FileOutputStream("./Location/"+aLoc.getaClient()+" "+aLoc.getaVehicule()+".xml");
+            XMLEncoder encoder = new XMLEncoder(fiche);
+            encoder.writeObject(aLoc);
+            encoder.close();
+            fiche.close();
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
     }
 
 }

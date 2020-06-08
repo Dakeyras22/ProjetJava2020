@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
+
 public class PageLocationAvion extends JFrame implements ActionListener{
 
     public JComboBox listeClients;
@@ -27,6 +28,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
     private JPanel panelRetour;
     private JPanel panelAjout;
     private JPanel panelConsult;
+    private JPanel panelRendu;
 
     private JPanel panelNom;
     private JPanel panelPrenom;
@@ -64,13 +66,19 @@ public class PageLocationAvion extends JFrame implements ActionListener{
     private JButton retour;
     private JButton ajout;
     private JButton consult;
+    private JButton rendu;
 
     private Client leGars;
     private Avion lAvion;
+    private FicheLocation laFiche;
 
     private ArrayList<String> tabClients = new ArrayList<>();
     private ArrayList<String> tabAvions = new ArrayList<>();
+    private ArrayList<String> tabLocations = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe PageLocationAvion générant l'affichage de la fenêtre
+     */
 
     public PageLocationAvion(){
 
@@ -86,6 +94,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         retour = new JButton("Retour");
         ajout = new JButton("Ajouter Fiche");
         consult = new JButton("Consulter fiches du client");
+        rendu = new JButton("Fiche de Rendu");
 
         listeClients = new JComboBox();
         panelListeClient = new JPanel();
@@ -101,6 +110,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         panelRetour = new JPanel();
         panelAjout = new JPanel();
         panelConsult = new JPanel();
+        panelRendu = new JPanel();
         panelInfoClient = new JPanel();
         panelInfoAvion = new JPanel();
 
@@ -128,6 +138,11 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         ajoutListeAvion();
         if(!tabAvions.isEmpty()){
             comboBoxAvionInit();
+        }
+
+        ajoutListeLocation();
+        if(!tabClients.isEmpty()){
+            comboBoxLocationInit();
         }
 
         if(listeClients.getSelectedItem() != null) {
@@ -199,11 +214,14 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         panelBoutons.setLayout(grilleBoutons);
         panelBoutons.add(panelAjout);
         panelBoutons.add(panelConsult);
+        panelBoutons.add(panelRendu);
         panelBoutons.add(panelRetour);
+
 
         panelAjout.add(ajout);
         panelConsult.add(consult);
         panelRetour.add(retour);
+        panelRendu.add(rendu);
 
         panelListes.setLayout(grilleListes);
         panelListes.add(panelListeClient);
@@ -231,6 +249,7 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         retour.addActionListener(this);
         ajout.addActionListener(this);
         consult.addActionListener(this);
+        rendu.addActionListener(this);
         listeAvion.addActionListener(this);
         listeClients.addActionListener(this);
 
@@ -254,14 +273,26 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         }
 
         if(e.getSource() == ajout){
-
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            lAvion = ficheInitAvion(listeAvion.getSelectedItem().toString());
+            PageAjoutFiche pageAjoutFiche = new PageAjoutFiche(leGars,lAvion);
+            this.dispose();
         }
 
         if (e.getSource() == consult){
             leGars = ficheInitClient(listeClients.getSelectedItem().toString());
             lAvion = ficheInitAvion(listeAvion.getSelectedItem().toString());
-            PageConsultClient pageConsult = new PageConsultClient(leGars);
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageConsultFiche pageConsult = new PageConsultFiche(listeClients.getSelectedItem().toString(),listeAvion.getSelectedItem().toString(),laFiche,leGars,lAvion);
             this.setVisible(false);
+        }
+
+        if(e.getSource()== rendu){
+            leGars = ficheInitClient(listeClients.getSelectedItem().toString());
+            lAvion = ficheInitAvion(listeAvion.getSelectedItem().toString());
+            laFiche = ficheInitLocation(listeFiches.getSelectedItem().toString());
+            PageRenduFiche pageRenduFiche = new PageRenduFiche(listeClients.getSelectedItem().toString(),listeAvion.getSelectedItem().toString(),laFiche,leGars,lAvion);
+            this.dispose();
         }
 
         if(e.getSource() == listeClients){
@@ -291,6 +322,13 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Méthode générant un objet Client à partir d'un fichier .xml
+     *
+     * @param client
+     * @return
+     */
+
     public Client ficheInitClient(String client) {
 
         Client mec = null;
@@ -309,7 +347,12 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         return mec;
     }
 
-
+    /**
+     * Méthode générant un objet Avion à partir d'un fichier .xml
+     *
+     * @param avion
+     * @return
+     */
 
     public Avion ficheInitAvion(String avion) {
 
@@ -329,7 +372,35 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         return plane;
     }
 
-    // ============================================================
+    /**
+     * Méthode générant un objet FicheLocation à partir d'un fichier .xml
+     *
+     * @param location
+     * @return
+     */
+
+
+    public FicheLocation ficheInitLocation(String location) {
+
+        FicheLocation fiche = null;
+        try {
+            FileInputStream fichier = new FileInputStream("./Location/" + location + ".xml");
+            XMLDecoder decoder = new XMLDecoder(fichier);
+            fiche = (FicheLocation) decoder.readObject();
+            decoder.close();
+            fichier.close();
+
+        }
+
+        catch(Exception e){
+            System.out.println(e);
+        }
+        return fiche;
+    }
+
+    /**
+     * Méthode ajoutant à une liste les différents clients
+     */
 
     public void ajoutListeAvion(){
 
@@ -359,7 +430,49 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
     }
 
-    // ============================================================
+    /**
+     * Méthode ajoutant à une liste les locations pour un client et un avion
+     */
+
+    public void ajoutListeLocation(){
+
+        FilenameFilter filtre = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.endsWith(".xml");
+            }
+        };
+
+        int i;
+        new File("./Location").mkdir();
+
+        File dossier = new File("./Location/");
+        File[] fichiersVoitures = dossier.listFiles(filtre);
+        for (i = 0; i < fichiersVoitures.length; i++) {
+
+            String[] tab = fichiersVoitures[i].toString().split("/");
+            String[] nomFichier = tab[2].split(".xml");
+            String[] nomFichierh = nomFichier[0].split(" ");
+            String modele = nomFichierh[3];
+            String marque = nomFichierh[2];
+            String prenom = nomFichierh[1];
+            String nom = nomFichierh[0];
+            String location = nom + " " + prenom + " " + marque + " " + modele;
+            System.out.println(location);
+
+
+            if((nom + " "+ prenom).equals(listeClients.getSelectedItem().toString()) && (marque+" "+modele).equals(listeAvion.getSelectedItem().toString())) {
+
+                tabLocations.add(location);
+            }
+        }
+
+    }
+
+    /**
+     * Méthode ajoutant à une liste les différents clients
+     */
+
     public void ajoutListeClient(){
 
         FilenameFilter filtre = new FilenameFilter() {
@@ -389,6 +502,9 @@ public class PageLocationAvion extends JFrame implements ActionListener{
 
     }
 
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Clients
+     */
 
     private void comboBoxClientInit() {
         listeClients.removeAllItems();
@@ -399,12 +515,27 @@ public class PageLocationAvion extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Avions
+     */
 
     private void comboBoxAvionInit() {
         listeAvion.removeAllItems();
         for (String c : tabAvions) {
 
             listeAvion.addItem(c);
+        }
+    }
+
+    /**
+     * Méthode remplissant la ComboBox avec la liste des Locations
+     */
+
+    private void comboBoxLocationInit() {
+        listeFiches.removeAllItems();
+        for (String c : tabLocations) {
+
+            listeFiches.addItem(c);
         }
     }
 

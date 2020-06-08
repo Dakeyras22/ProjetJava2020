@@ -43,6 +43,10 @@ public class PageAjoutClient extends JFrame implements ActionListener {
     private JButton ajout = new JButton("Ajouter");
     private JButton retour = new JButton("Retour");
 
+
+    /**
+     * Constructeur de la classe PageAjoutClient générant l'affichage de la fenêtre
+     */
     public PageAjoutClient(){
 
         /*choix des polices d'écriture*/
@@ -164,12 +168,29 @@ public class PageAjoutClient extends JFrame implements ActionListener {
         this.dispose();
     }
 
+    /**
+     * Méthode générant un client à partir des infos récupérées
+     *
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param adresse
+     * @param telephone
+     * @param mail
+     */
+
     public void ajoutClient(String nom, String prenom, String dateNaissance, String adresse, String telephone,
                             String mail){
         Client aClient = new Client(nom,prenom,dateNaissance,adresse,telephone,mail);
         ecrireClient(aClient);
 
     }
+
+    /**
+     * Méthode transformant un objet Client en fichier .xml
+     *
+     * @param aClient
+     */
 
     public void ecrireClient(Client aClient) {
 

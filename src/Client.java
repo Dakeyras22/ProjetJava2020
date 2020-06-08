@@ -1,3 +1,6 @@
+import java.beans.XMLDecoder;
+import java.io.FileInputStream;
+
 public class Client {
 
     private String nom;
@@ -6,6 +9,17 @@ public class Client {
     private String adresse;
     private String telephone;
     private String mail;
+
+    /**
+     * Constructeur de la classe Client avec en paramètres les infos de ceux-ci
+     *
+     * @param nom
+     * @param prenom
+     * @param dateNaissance
+     * @param adresse
+     * @param telephone
+     * @param mail
+     */
 
 
     public Client(String nom,String prenom,String dateNaissance,String adresse,String telephone,String mail){
@@ -18,6 +32,7 @@ public class Client {
         this.mail = mail;
 
     }
+
     public Client(){}
 
     /*===================================================================== Getters ================================*/
@@ -70,4 +85,5 @@ public class Client {
     public void setMail(String mail) {
         this.mail = mail;
     }
+
 }

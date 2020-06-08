@@ -1,7 +1,7 @@
 public class FicheLocation {
 
-    private Client aClient;
-    private Vehicules aVehicule;
+    private String aClient;
+    private String aVehicule;
     private String dateDebut;
     private String dateFin;
     private int nbJours;
@@ -10,10 +10,22 @@ public class FicheLocation {
     private int kmFinal;
     private double prixFinal;
 
-    public FicheLocation(Client aClient, Vehicules aVehicule, String dateDebut, String dateFin,int nbJours, int kmPrevu, double prixPrevu){
+    /**
+     * Constructeur de la classe FicheLocation que les paramètres suivants définissent
+     *
+     * @param client
+     * @param vehicule
+     * @param dateDebut
+     * @param dateFin
+     * @param nbJours
+     * @param kmPrevu
+     * @param prixPrevu
+     */
 
-        this.aClient = aClient;
-        this.aVehicule = aVehicule;
+    public FicheLocation(String client, String vehicule, String dateDebut, String dateFin,int nbJours, int kmPrevu, double prixPrevu){
+
+        this.aClient = client;
+        this.aVehicule = vehicule;
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.nbJours = nbJours;
@@ -25,13 +37,15 @@ public class FicheLocation {
 
     }
 
+    public FicheLocation(){}
+
     /* ======================================== Getters =========================================*/
 
-    public Client getaClient() {
+    public String getaClient() {
         return aClient;
     }
 
-    public Vehicules getaVehicule() {
+    public String getaVehicule() {
         return aVehicule;
     }
 
@@ -59,12 +73,13 @@ public class FicheLocation {
 
     /*======================================== Setters ===================================*/
 
-    public void setaClient(Client aClient) {
+    public void setAClient(String aClient) {
         this.aClient = aClient;
     }
 
-    public void setaVehicule(Vehicules aVehicule) {
+    public void setAVehicule(String aVehicule) {
         this.aVehicule = aVehicule;
+
     }
 
     public void setDateDebut(String dateDebut) {

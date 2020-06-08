@@ -57,6 +57,10 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageAjoutVoiture générant l'affichage de la fenêtre
+     */
+
     public PageAjoutVoiture(){
 
         slogan.setFont(new Font("TimesRoman", Font.ITALIC, 14));
@@ -198,20 +202,30 @@ public class PageAjoutVoiture extends JFrame implements ActionListener{
         }
     }
 
-            public void ajoutVoiture(){
-                Voiture aVoiture = new Voiture();
-                aVoiture.setMarque(marque.getText());
-                aVoiture.setModele(modele.getText());
-                aVoiture.setEtat(etat.getText());
-                aVoiture.setKm(Integer.parseInt(km.getText()));
-                aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
-                aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
-                aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
-                aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
-                aVoiture.setDisponible(disponible);
+    /**
+     * Méthode générant un objet Voiture à partir des informations récupérées
+     */
 
-                ecrireVoiture(aVoiture);
-            }
+    public void ajoutVoiture(){
+        Voiture aVoiture = new Voiture();
+        aVoiture.setMarque(marque.getText());
+        aVoiture.setModele(modele.getText());
+        aVoiture.setEtat(etat.getText());
+        aVoiture.setKm(Integer.parseInt(km.getText()));
+        aVoiture.setVitesseMax(Integer.parseInt(vitesseMax.getText()));
+        aVoiture.setPuissance(Integer.parseInt(puissance.getText()));
+        aVoiture.setNbPlaces(Integer.parseInt(nbPlaces.getText()));
+        aVoiture.setPrixLocation(Integer.parseInt(prix.getText()));
+        aVoiture.setDisponible(disponible);
+
+        ecrireVoiture(aVoiture);
+    }
+
+    /**
+     * Méthode transformant un objet Voiture en fichier .xml
+     *
+     * @param aVoiture
+     */
 
     public void ecrireVoiture(Voiture aVoiture) {
 

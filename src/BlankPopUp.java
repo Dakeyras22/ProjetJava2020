@@ -14,6 +14,10 @@ public class BlankPopUp extends JFrame implements ActionListener {
     private JPanel panAvertissement = new JPanel();
     private JPanel panFermer = new JPanel();
 
+    /**
+     * Constructeur de la classe BlankPopUp
+     */
+
     public BlankPopUp(){
 
         avertissement.setFont(new Font("Arial", Font.PLAIN, 16)); //choix de la police d'écriture

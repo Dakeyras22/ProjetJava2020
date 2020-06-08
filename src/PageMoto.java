@@ -60,6 +60,9 @@ public class PageMoto extends JFrame implements ActionListener {
 
     private ArrayList<String> tabMoto = new ArrayList<>();
 
+    /**
+     * Constructeur de la classe PageMoto générant l'affichage de la fenêtre
+     */
 
     public PageMoto(){
 
@@ -264,6 +267,13 @@ public class PageMoto extends JFrame implements ActionListener {
         }
     }
 
+    /**
+     * Méthode générant un objet Moto à partir d'un fichier .xml
+     *
+     * @param moto
+     * @return
+     */
+
     public Moto ficheInit(String moto) {
 
         Moto motorbike = null;
@@ -282,7 +292,9 @@ public class PageMoto extends JFrame implements ActionListener {
         return motorbike;
     }
 
-    // ============================================================
+    /**
+     * Méthode ajoutant à une liste les fiches Moto
+     */
 
     public void ajoutListeMoto(){
 
@@ -312,7 +324,7 @@ public class PageMoto extends JFrame implements ActionListener {
     }
 
     /**
-     * Cette fonction permet de remplir la ComboBox des voitures
+     * Cette fonction permet de remplir la ComboBox des Motos
      */
 
     private void comboBoxInit() {

@@ -16,6 +16,15 @@ public class PrixPopUp extends JFrame implements ActionListener {
     private JPanel panTxtPrixReduit = new JPanel();
     private double prixReduit;
 
+    /**
+     * Constructeur de la classe PagePopUp générant l'affichage de la fenêtre
+     *
+     * @param prix
+     * @param reduc
+     * @param ficheLocation
+     * @param bPrixFinal
+     */
+
     public PrixPopUp(double prix, boolean reduc, FicheLocation ficheLocation, boolean bPrixFinal){
 
         if(bPrixFinal==false) {

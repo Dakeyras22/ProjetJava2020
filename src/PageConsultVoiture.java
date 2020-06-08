@@ -54,6 +54,12 @@ public class PageConsultVoiture extends JFrame implements ActionListener{
     private ButtonGroup buttonGroup = new ButtonGroup();
     private boolean disponible;
 
+    /**
+     * Constructeur de la classe PageConsultVoiture générant l'affichage de la fenêtre
+     *
+     * @param aVoiture
+     */
+
     public PageConsultVoiture(Voiture aVoiture){
 
         marque.setText(aVoiture.getMarque());
@@ -210,6 +216,10 @@ public class PageConsultVoiture extends JFrame implements ActionListener{
         }
     }
 
+    /**
+     * Méthode créant une Voiture avec les informations modifiées
+     */
+
     public void ModifVoiture(){
         Voiture aVoiture = new Voiture();
         aVoiture.setMarque(marque.getText());
@@ -223,6 +233,12 @@ public class PageConsultVoiture extends JFrame implements ActionListener{
         aVoiture.setDisponible(disponible);
         ecrireVoiture(aVoiture);
     }
+
+    /**
+     * Méthode transformant un objet Voiture en fichier .xml
+     *
+     * @param aVoiture
+     */
 
     public void ecrireVoiture(Voiture aVoiture) {
 
